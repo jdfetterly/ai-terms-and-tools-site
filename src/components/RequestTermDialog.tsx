@@ -100,10 +100,10 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             id="request-term-form"
-            className="flex flex-col flex-1 min-h-0 overflow-hidden" // Ensure form is flex container, takes up space, can shrink, and hides its own overflow
+            className="flex-1 min-h-0 relative" // Takes up space, allows shrinking, and positions ScrollArea
           >
-            <ScrollArea className="flex-1"> {/* ScrollArea takes available space */}
-              <div className="space-y-6 p-4"> {/* Add padding inside scrollable area */}
+            <ScrollArea className="absolute inset-0"> {/* Fills the form element */}
+              <div className="space-y-6 p-6"> {/* Padding inside scrollable area */}
                 <FormField
                   control={form.control}
                   name="termName"
@@ -203,7 +203,7 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
             </ScrollArea>
           </form>
         </Form>
-        <DialogFooter className="pt-4 border-t">
+        <DialogFooter className="border-t mt-auto"> {/* mt-auto pushes footer to bottom in flex column if space allows, border-t */}
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
             Cancel
           </Button>
@@ -222,3 +222,4 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
     </Dialog>
   );
 }
+
