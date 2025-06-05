@@ -83,6 +83,11 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
     }
   };
 
+  // Helper to trigger form submission from the external button
+  const handleFormSubmit = () => {
+    form.handleSubmit(onSubmit)();
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] flex flex-col max-h-[90vh]">
@@ -93,8 +98,12 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden space-y-4">
-            <ScrollArea className="flex-1 pr-2">
+          <form 
+            onSubmit={form.handleSubmit(onSubmit)} 
+            id="request-term-form" // Add an ID for the external button to reference if needed, though programmatic submit is used here.
+            className="flex flex-col flex-1 min-h-0" // Adjusted classes: removed overflow-hidden, space-y-4. Added min-h-0.
+          >
+            <ScrollArea className="flex-1 pr-2"> {/* ScrollArea will fill the form element */}
               <div className="space-y-6 py-4 pr-4">
                 <FormField
                   control={form.control}
@@ -193,24 +202,24 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
                 </div>
               </div>
             </ScrollArea>
-
-            <DialogFooter className="pt-4 border-t mt-auto">
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Submitting...
-                  </>
-                ) : (
-                  'Submit Request'
-                )}
-              </Button>
-            </DialogFooter>
+            {/* DialogFooter is now outside this form element */}
           </form>
         </Form>
+        <DialogFooter className="pt-4 border-t"> {/* Footer is a direct child of DialogContent */}
+          <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
+            Cancel
+          </Button>
+          <Button type="button" onClick={handleFormSubmit} disabled={isSubmitting}> {/* Changed to type="button" and calls handleFormSubmit */}
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              'Submit Request'
+            )}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
