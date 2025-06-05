@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { LayoutDashboard, ListChecks, Search, Brain } from 'lucide-react';
+import { LayoutDashboard, ListChecks, Search, Brain, Sparkles, Puzzle } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -141,13 +141,44 @@ export default function AIPediaPage() {
       </Sidebar>
 
       <SidebarInset>
+        <div className="p-6 border-b">
+          <h1 className="text-3xl lg:text-4xl font-bold font-headline mb-2 text-primary">
+            The 2025 AI Glossary
+          </h1>
+          <p className="text-lg text-foreground/90 mb-8">
+            Key Terms and Concepts You Actually Need to Know
+          </p>
+
+          <div className="space-y-4">
+            <div className="flex items-start gap-4 p-4 bg-card rounded-lg shadow">
+              <Sparkles className="h-8 w-8 text-accent shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-card-foreground mb-1">Your Guide to GenAI</h3>
+                <p className="text-sm text-muted-foreground">
+                  A plain-English guide for navigating Generative AI. Learn to speak the language of Artificial Intelligence.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 p-4 bg-card rounded-lg shadow">
+              <Puzzle className="h-8 w-8 text-accent shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-card-foreground mb-1">Explore & Understand</h3>
+                <p className="text-sm text-muted-foreground">
+                  For some of the terms below, I’ve either built or found interactive tools to help you grasp the concepts.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6">
           <SidebarTrigger className="md:hidden" />
           <h2 className="text-xl font-semibold font-headline">
             {selectedCategory ? selectedCategory : (sortBy === 'alphabetical' ? 'All Terms (A-Z)' : 'All Terms')}
           </h2>
         </header>
-        <ScrollArea className="h-[calc(100vh-4rem)]">
+        <ScrollArea className="h-[calc(100vh-4rem-var(--intro-section-height,0px))]"> {/* Adjusted height calculation needed if intro section height is dynamic */}
           <main className="flex-1 p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredTerms.length > 0 ? (
               filteredTerms.map(term => (
