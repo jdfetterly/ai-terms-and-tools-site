@@ -169,7 +169,7 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
                     name="interactiveToolUrl"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Tool URL</FormLabel>
+                        <FormLabel>Link to Interactive Tool</FormLabel>
                         <FormControl>
                           <Input placeholder="https://example.com/tool" {...field} />
                         </FormControl>
