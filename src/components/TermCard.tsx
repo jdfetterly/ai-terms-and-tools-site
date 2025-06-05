@@ -1,7 +1,8 @@
+
 'use client';
 
 import type { Term } from '@/lib/types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import MarkdownRenderer from './MarkdownRenderer';
 import InteractiveToolEmbed from './InteractiveToolEmbed';
@@ -9,6 +10,12 @@ import { generateExampleAction } from '@/app/actions';
 import React, { useState } from 'react';
 import { Loader2, Wand2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface TermCardProps {
   term: Term;
@@ -35,16 +42,6 @@ export default function TermCard({ term }: TermCardProps) {
     setIsLoadingExample(false);
   };
 
-  const renderContentPart = (label: string, content?: string) => {
-    if (!content) return null;
-    return (
-      <div className="mb-3">
-        <h4 className="font-semibold text-md text-primary mb-1">{label}</h4>
-        <MarkdownRenderer content={content} />
-      </div>
-    );
-  };
-
   return (
     <Card id={term.id} className="mb-6 shadow-lg_ overflow-hidden">
       <CardHeader className="bg-card-foreground/5">
@@ -52,41 +49,77 @@ export default function TermCard({ term }: TermCardProps) {
         <CardDescription className="text-sm text-muted-foreground">{term.category}</CardDescription>
       </CardHeader>
       <CardContent className="pt-4">
-        {renderContentPart('Simple Definition', term.content.simpleDefinition)}
-        {renderContentPart('Analogy', term.content.analogy)}
-        
-        {term.content.example ? (
-          renderContentPart('Example', term.content.example)
-        ) : (
-          <div className="mb-3">
-            <h4 className="font-semibold text-md text-primary mb-1">Example</h4>
-            {isLoadingExample ? (
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <Loader2 className="h-5 w-5 animate-spin" />
-                <span>Generating example...</span>
-              </div>
-            ) : generatedExample ? (
-              <MarkdownRenderer content={generatedExample} />
-            ) : (
-              <Button onClick={handleGenerateExample} variant="outline" size="sm">
-                <Wand2 className="mr-2 h-4 w-4" />
-                Generate Example with AI
-              </Button>
-            )}
-          </div>
-        )}
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold text-primary mb-1">Simple Definition</h3>
+          <MarkdownRenderer content={term.content.simpleDefinition} />
+        </div>
 
-        {renderContentPart('Elaboration', term.content.elaboration)}
-        {renderContentPart('Why it Matters', term.content.whyItMatters)}
+        <Accordion type="multiple" className="w-full">
+          <AccordionItem value="example">
+            <AccordionTrigger>Example</AccordionTrigger>
+            <AccordionContent>
+              {term.content.example ? (
+                <MarkdownRenderer content={term.content.example} />
+              ) : (
+                <>
+                  {isLoadingExample ? (
+                    <div className="flex items-center space-x-2 text-muted-foreground mt-2">
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      <span>Generating example...</span>
+                    </div>
+                  ) : generatedExample ? (
+                    <MarkdownRenderer content={generatedExample} />
+                  ) : (
+                    <Button onClick={handleGenerateExample} variant="outline" size="sm" className="mt-2">
+                      <Wand2 className="mr-2 h-4 w-4" />
+                      Generate Example with AI
+                    </Button>
+                  )}
+                </>
+              )}
+            </AccordionContent>
+          </AccordionItem>
 
-        {term.interactiveTools && term.interactiveTools.length > 0 && (
-          <div className="mt-6">
-            <h3 className="text-xl font-semibold mb-3 text-primary">Interactive Tools</h3>
-            {term.interactiveTools.map(tool => (
-              <InteractiveToolEmbed key={tool.url} tool={tool} />
-            ))}
-          </div>
-        )}
+          {term.content.analogy && (
+            <AccordionItem value="analogy">
+              <AccordionTrigger>Analogy</AccordionTrigger>
+              <AccordionContent>
+                <MarkdownRenderer content={term.content.analogy} />
+              </AccordionContent>
+            </AccordionItem>
+          )}
+
+          {term.content.elaboration && (
+            <AccordionItem value="elaboration">
+              <AccordionTrigger>Elaboration</AccordionTrigger>
+              <AccordionContent>
+                <MarkdownRenderer content={term.content.elaboration} />
+              </AccordionContent>
+            </AccordionItem>
+          )}
+
+          {term.content.whyItMatters && (
+            <AccordionItem value="why-it-matters">
+              <AccordionTrigger>Why it Matters</AccordionTrigger>
+              <AccordionContent>
+                <MarkdownRenderer content={term.content.whyItMatters} />
+              </AccordionContent>
+            </AccordionItem>
+          )}
+
+          {term.interactiveTools && term.interactiveTools.length > 0 && (
+            <AccordionItem value="interactive-tools">
+              <AccordionTrigger>Interactive Tools</AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-4">
+                  {term.interactiveTools.map(tool => (
+                    <InteractiveToolEmbed key={tool.url} tool={tool} />
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          )}
+        </Accordion>
       </CardContent>
     </Card>
   );
