@@ -1,3 +1,4 @@
+
 export interface InteractiveTool {
   name: string;
   url: string;
@@ -18,4 +19,14 @@ export interface Term {
   category: string; // e.g., "Foundational Concepts"
   content: TermContent;
   interactiveTools?: InteractiveTool[];
+}
+
+export interface RequestNewTermInput {
+  termName: string;
+  simpleDefinition?: string;
+  elaboration?: string;
+  whyItMatters?: string;
+  interactiveToolName?: string;
+  interactiveToolUrl?: string;
+  interactiveToolDescription?: string;
 }

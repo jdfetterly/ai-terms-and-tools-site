@@ -1,14 +1,15 @@
 
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { terms, categories } from '@/data/terms';
+import React, { useState, useMemo, useEffect } from 'react';
+import { terms as allTermsData, categories } from '@/data/terms';
 import TermCard from '@/components/TermCard';
+import RequestTermDialog from '@/components/RequestTermDialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { LayoutDashboard, ListChecks, Search, Brain, Sparkles, Puzzle } from 'lucide-react';
+import { LayoutDashboard, ListChecks, Search, Brain, Sparkles, Puzzle, Lightbulb } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -29,9 +30,26 @@ export default function AIPediaPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<'category' | 'alphabetical'>('category');
+  const [introSectionHeight, setIntroSectionHeight] = useState(0);
+  const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
+
+  const introRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (introRef.current) {
+      setIntroSectionHeight(introRef.current.offsetHeight);
+    }
+    const handleResize = () => {
+      if (introRef.current) {
+        setIntroSectionHeight(introRef.current.offsetHeight);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const filteredTerms = useMemo(() => {
-    let displayTerms = [...terms]; // Create a mutable copy
+    let displayTerms = [...allTermsData];
 
     if (selectedCategory) {
       displayTerms = displayTerms.filter(term => term.category === selectedCategory);
@@ -47,7 +65,7 @@ export default function AIPediaPage() {
 
     if (sortBy === 'alphabetical') {
       displayTerms.sort((a, b) => a.name.localeCompare(b.name));
-    } else { // Default to category sort, then alphabetical within category
+    } else {
       displayTerms.sort((a, b) => {
         const categoryAIndex = categories.indexOf(a.category);
         const categoryBIndex = categories.indexOf(b.category);
@@ -61,9 +79,9 @@ export default function AIPediaPage() {
     return displayTerms;
   }, [searchTerm, selectedCategory, sortBy]);
 
-  const termsByCategory = useMemo(() => {
+  const termsGroupedByCategory = useMemo(() => {
     if (sortBy !== 'category' || selectedCategory !== null) {
-      return null;
+      return null; // Only group when 'All Terms (by Category)' is selected
     }
     const grouped: Record<string, Term[]> = {};
     categories.forEach(category => {
@@ -142,7 +160,7 @@ export default function AIPediaPage() {
                   <SidebarMenuButton
                     onClick={() => {
                       setSelectedCategory(category);
-                      setSortBy('category'); // When a category is selected, ensure sort is by category
+                      setSortBy('category'); 
                     }}
                     isActive={selectedCategory === category}
                     tooltip={`View terms in ${category}`}
@@ -155,13 +173,17 @@ export default function AIPediaPage() {
             </SidebarMenu>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter className="p-4">
-          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} AI Lexicon</p>
+        <SidebarFooter className="p-4 border-t space-y-2">
+           <Button variant="outline" className="w-full" onClick={() => setIsRequestDialogOpen(true)}>
+            <Lightbulb className="mr-2 h-4 w-4" />
+            Request New Term
+          </Button>
+          <p className="text-xs text-muted-foreground text-center">© {new Date().getFullYear()} AI Lexicon</p>
         </SidebarFooter>
       </Sidebar>
 
       <SidebarInset>
-        <div className="p-6 border-b">
+        <div ref={introRef} className="p-6 border-b">
           <h1 className="text-3xl lg:text-4xl font-bold font-headline mb-2 text-primary">
             The 2025 AI Glossary
           </h1>
@@ -198,27 +220,39 @@ export default function AIPediaPage() {
             {selectedCategory ? selectedCategory : (sortBy === 'alphabetical' ? 'All Terms (A-Z)' : 'All Terms (by Category)')}
           </h2>
         </header>
-        <ScrollArea className="h-[calc(100vh-4rem-var(--intro-section-height,0px))]">
+        
+        <ScrollArea 
+          className="h-[calc(100vh-4rem)]" 
+          style={{ '--intro-section-height': `${introSectionHeight}px`, height: `calc(100vh - 4rem - var(--intro-section-height))` } as React.CSSProperties}
+        >
           <div className="p-6">
-            {termsByCategory ? (
-              categories.map(category => {
-                const termsInThisCategory = termsByCategory[category];
-                if (!termsInThisCategory || termsInThisCategory.length === 0) {
-                  return null;
-                }
-                return (
-                  <section key={category} className="mb-12">
-                    <h3 className="text-2xl font-semibold font-headline text-primary mb-6 pb-2 border-b border-primary/30">
-                      {category}
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {termsInThisCategory.map(term => (
-                        <TermCard key={term.id} term={term} />
-                      ))}
-                    </div>
-                  </section>
-                );
-              })
+            {termsGroupedByCategory ? (
+              Object.keys(termsGroupedByCategory).length > 0 ? (
+                categories.map(category => {
+                  const termsInThisCategory = termsGroupedByCategory[category];
+                  if (!termsInThisCategory || termsInThisCategory.length === 0) {
+                    return null;
+                  }
+                  return (
+                    <section key={category} className="mb-12">
+                      <h3 className="text-2xl font-semibold font-headline text-primary mb-6 pb-2 border-b border-primary/30">
+                        {category}
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {termsInThisCategory.map(term => (
+                          <TermCard key={term.id} term={term} />
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })
+              ) : (
+                 <div className="text-center text-muted-foreground py-10">
+                  <Search className="mx-auto h-12 w-12 mb-4" />
+                  <p className="text-lg">No terms found.</p>
+                  <p>Try adjusting your search or category selection.</p>
+                </div>
+              )
             ) : filteredTerms.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {filteredTerms.map(term => (
@@ -226,23 +260,16 @@ export default function AIPediaPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center text-muted-foreground py-10 md:col-span-2">
+              <div className="text-center text-muted-foreground py-10">
                 <Search className="mx-auto h-12 w-12 mb-4" />
                 <p className="text-lg">No terms found.</p>
                 <p>Try adjusting your search or category selection.</p>
               </div>
             )}
-             {/* Fallback for no results in category view if somehow termsByCategory is null but filteredTerms is empty */}
-             {termsByCategory && Object.keys(termsByCategory).length === 0 && filteredTerms.length === 0 && (
-                <div className="text-center text-muted-foreground py-10 md:col-span-2">
-                  <Search className="mx-auto h-12 w-12 mb-4" />
-                  <p className="text-lg">No terms found for the current selection.</p>
-                  <p>Try adjusting your search or category selection.</p>
-                </div>
-             )}
           </div>
         </ScrollArea>
       </SidebarInset>
+      <RequestTermDialog isOpen={isRequestDialogOpen} onOpenChange={setIsRequestDialogOpen} />
     </SidebarProvider>
   );
 }
