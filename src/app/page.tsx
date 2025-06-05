@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useMemo } from 'react';
@@ -147,13 +148,13 @@ export default function AIPediaPage() {
           </h2>
         </header>
         <ScrollArea className="h-[calc(100vh-4rem)]">
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredTerms.length > 0 ? (
               filteredTerms.map(term => (
                 <TermCard key={term.id} term={term} />
               ))
             ) : (
-              <div className="text-center text-muted-foreground py-10">
+              <div className="text-center text-muted-foreground py-10 md:col-span-2">
                 <Search className="mx-auto h-12 w-12 mb-4" />
                 <p className="text-lg">No terms found.</p>
                 <p>Try adjusting your search or category selection.</p>

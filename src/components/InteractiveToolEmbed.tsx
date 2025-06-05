@@ -1,3 +1,4 @@
+
 import type { InteractiveTool } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -21,7 +22,14 @@ export default function InteractiveToolEmbed({ tool }: InteractiveToolEmbedProps
           loading="lazy"
         ></iframe>
         <p className="text-xs text-muted-foreground mt-2">
-          Interacting with this tool will take you to an external website: <a href={tool.url} target="_blank" rel="noopener noreferrer" className="text-accent-foreground hover:underline">{tool.url}</a>
+          <a 
+            href={tool.url} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-primary hover:underline font-medium"
+          >
+            Open {tool.name} in a new tab
+          </a>
         </p>
       </CardContent>
     </Card>
