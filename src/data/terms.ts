@@ -1,8 +1,17 @@
+
 import type { Term } from '@/lib/types';
 
+function generateId(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '');
+}
+
 export const terms: Term[] = [
+  // Foundational Concepts
   {
-    id: 'artificial-intelligence',
+    id: generateId('Artificial Intelligence (AI)'),
     name: 'Artificial Intelligence (AI)',
     category: 'Foundational Concepts',
     content: {
@@ -12,7 +21,7 @@ export const terms: Term[] = [
     },
   },
   {
-    id: 'generative-ai',
+    id: generateId('Generative AI'),
     name: 'Generative AI',
     category: 'Foundational Concepts',
     content: {
@@ -24,7 +33,7 @@ export const terms: Term[] = [
     },
   },
   {
-    id: 'large-language-model',
+    id: generateId('Large Language Model (LLM)'),
     name: 'Large Language Model (LLM)',
     category: 'Foundational Concepts',
     content: {
@@ -36,7 +45,7 @@ export const terms: Term[] = [
     },
   },
   {
-    id: 'token',
+    id: generateId('Token'),
     name: 'Token',
     category: 'Foundational Concepts',
     content: {
@@ -48,41 +57,43 @@ export const terms: Term[] = [
     },
   },
   {
-    id: 'prompt',
+    id: generateId('Prompt'),
     name: 'Prompt',
     category: 'Foundational Concepts',
     content: {
       simpleDefinition: 'The instruction or input given to a Generative AI model to guide its output.',
-      analogy: 'A recipe for a chef; clear instructions lead to better results.',
       example: '"Write a short email to the sales team about Q3 performance."',
+      analogy: 'A recipe for a chef; clear instructions lead to better results.',
       elaboration: 'A prompt can be a simple question, a detailed command, or even an example of the desired output. Its effectiveness hinges on its clarity, specificity, and the context it provides. A well-crafted prompt helps steer the AI towards generating relevant, accurate, and high-quality content, acting as the primary interface for human-AI interaction.',
       whyItMatters: "Directly impacts AI output quality; it's how you \"talk\" to the AI and is fundamental to controlling and directing its creative capabilities.",
     },
   },
   {
-    id: 'context-window',
+    id: generateId('Context Window'),
     name: 'Context Window',
     category: 'Foundational Concepts',
     content: {
-        simpleDefinition: "The amount of text (measured in Tokens) that an Large Language Model (LLM) can consider at one time when processing an input or generating a response. It defines the AI's \"short-term memory\" for a given interaction.",
-        analogy: "Imagine talking to someone who has a very small notepad. They can remember everything you say as long as it fits on the notepad. Once it's full, they forget the oldest information to make room for new notes. The notepad size is their context window.",
-        example: "If an LLM has a 4,000-token context window and you provide a 5,000-token document, the model will only \"see\" and process the most recent 4,000 tokens, ignoring the beginning. Similarly, in a long conversation, it might forget early details depending on how much data is being stored in its Context Window.",
-        whyItMatters: "The size of the Context Window significantly impacts an AI's ability to maintain coherence over long conversations, understand lengthy documents, accurately follow multi-step instructions, and grasp complex themes. It's a key practical limitation and development frontier for LLMs.",
+      simpleDefinition: 'The amount of text (measured in Tokens) that an Large Language Model (LLM) can consider at one time when processing an input or generating a response. It defines the AI\'s "short-term memory" for a given interaction.',
+      analogy: "Imagine talking to someone who has a very small notepad. They can remember everything you say as long as it fits on the notepad. Once it's full, they forget the oldest information to make room for new notes. The notepad size is their context window.",
+      example: "If an LLM has a 4,000-token context window and you provide a 5,000-token document, the model will only \"see\" and process the most recent 4,000 tokens, ignoring the beginning. Similarly, in a long conversation, it might forget early details depending on how much data is being stored in its Context Window.",
+      whyItMatters: "The size of the Context Window significantly impacts an AI's ability to maintain coherence over long conversations, understand lengthy documents, accurately follow multi-step instructions, and grasp complex themes. It's a key practical limitation and development frontier for LLMs.",
     },
   },
   {
-    id: 'ai-agents',
+    id: generateId('AI Agents'),
     name: 'AI Agents',
     category: 'Foundational Concepts',
     content: {
-        simpleDefinition: "Autonomous AI systems that perceive their environment, process information, make decisions, and take actions to achieve specific goals, often interacting with humans or other systems.",
-        analogy: "Like a personal assistant who not only understands your requests but can also proactively gather information, plan steps, and execute tasks on your behalf without constant supervision.",
-        example: "An AI scheduling assistant that manages your calendar and sends meeting invites, an AI in a game that navigates a virtual world and makes strategic moves, or the Coding Agent that helps an engineer write code in their IDE.",
-        whyItMatters: "Agents represent a significant advancement towards more independent and goal-oriented AI applications, moving beyond simple response generation to autonomous task execution and problem-solving."
-    }
+      simpleDefinition: 'Autonomous AI systems that perceive their environment, process information, make decisions, and take actions to achieve specific goals, often interacting with humans or other systems.',
+      analogy: 'Like a personal assistant who not only understands your requests but can also proactively gather information, plan steps, and execute tasks on your behalf without constant supervision.',
+      example: 'An AI scheduling assistant that manages your calendar and sends meeting invites, an AI in a game that navigates a virtual world and makes strategic moves, or the Coding Agent that helps an engineer write code in their IDE.',
+      whyItMatters: 'Agents represent a significant advancement towards more independent and goal-oriented AI applications, moving beyond simple response generation to autonomous task execution and problem-solving.',
+    },
   },
+
+  // Interaction & Refinement
   {
-    id: 'prompt-engineering',
+    id: generateId('Prompt Engineering'),
     name: 'Prompt Engineering',
     category: 'Interaction & Refinement',
     content: {
@@ -94,14 +105,14 @@ export const terms: Term[] = [
     },
     interactiveTools: [
       {
-        name: 'Anthropic Prompt Engineering Tutorial',
+        name: 'Prompt Engineering Guide',
         url: 'https://github.com/anthropics/prompt-eng-interactive-tutorial',
-        description: 'An interactive guide on prompt engineering.',
+        description: 'An interactive guide on prompt engineering from Anthropic.',
       },
     ],
   },
   {
-    id: 'embeddings',
+    id: generateId('Embeddings'),
     name: 'Embeddings',
     category: 'Interaction & Refinement',
     content: {
@@ -113,16 +124,238 @@ export const terms: Term[] = [
     },
     interactiveTools: [
       {
-        name: 'Wizmap Tool',
+        name: 'Wizmap tool',
         url: 'https://poloclub.github.io/wizmap/',
         description: 'Easy to use tool for visualizing embeddings.',
       },
       {
         name: 'TensorFlow Embeddings Projector',
         url: 'https://projector.tensorflow.org/',
-        description: 'Advanced tool for exploring embeddings.',
+        description: 'Advanced tool for exploring embeddings. Click on cylindrical dots to see closest points (words) and their distance.',
       },
     ],
+  },
+  {
+    id: generateId('Model Parameters'),
+    name: 'Model Parameters',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'Internal values or "knobs" within an AI model adjusted during Training Process; more parameters allow learning more complex patterns.',
+      analogy: 'Imagine a complex musical instrument like a grand piano. Each string, hammer, and pedal mechanism is precisely tuned and adjusted. These individual adjustments, which collectively determine the instrument\'s sound quality and versatility, are like the AI\'s "parameters." The more finely tuned and numerous these adjustable parts are, the richer and more nuanced the music it can produce.',
+      example: 'A small AI model with perhaps a few thousand parameters might be used for a very specific task, like identifying whether a picture contains a cat or a dog. However, a massive [[Large Language Model (LLM)]] with billions or even trillions of parameters has learned an immensely complex web of relationships. This allows it to perform highly sophisticated tasks.',
+      elaboration: 'These parameters are numerical weights and biases that the model adjusts during its training phase as it learns from the Training Data. They essentially encode the knowledge and patterns the model has learned. A higher number of parameters generally means a more complex model capable of learning more intricate relationships, but also requires more computational power for training and inference, and can be more prone to Hallucination if not properly managed.',
+      whyItMatters: "Parameter count often correlates with a model's size and capability, indicating its ability to understand nuances and generate complex outputs. Larger models are usually more powerful but also more computationally expensive and require significant resources for development and deployment.",
+    },
+  },
+  {
+    id: generateId('Retrieval Augmented Generation (RAG)'),
+    name: 'Retrieval Augmented Generation (RAG)',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'A technique that enhances a **Large Language Model (LLM)** by allowing it to retrieve relevant information from an external, trusted knowledge base (like a database or documents) before generating a response.',
+      analogy: 'Imagine a brilliant student who, before answering a question, quickly looks up the most relevant facts in a reliable textbook or research paper. This allows them to give a more accurate, up-to-date, and well-supported answer, rather than just relying on what they vaguely remember.',
+      example: 'If you ask an **LLM** about a very recent company policy, instead of potentially **Hallucinating** or giving outdated information, a **RAG** system would first search your company\'s internal knowledge base for the policy, then use that retrieved information to formulate a precise answer. This is crucial for applications like customer support or internal knowledge management.',
+      whyItMatters: '**RAG** significantly reduces **Hallucination** in **LLM**s, improves factual accuracy, and allows models to provide answers based on the most current or proprietary information, making them much more reliable for business-critical applications.',
+    },
+  },
+  {
+    id: generateId('Model Context Protocol (MCP)'),
+    name: 'Model Context Protocol (MCP)',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'A standardized set of rules or an interface that allows an AI model (especially LLMs and AI agents) to effectively connect with and use external tools, functions, or APIs to accomplish tasks.',
+      analogy: 'Think of how APIs (Application Programming Interfaces) standardized the way different parts of the internet communicate and share information (e.g., how your weather app gets data from a weather service). The Model Context Protocol (MCP) does something similar for AI, providing a standard "language" for an AI to access and use specialized tools (like a calculator, a calendar, or a database searcher).',
+      example: 'Instead of just generating text, an LLM using an MCP server could:\n- **Check the current weather** in a city by calling a weather API.\n- **Book a flight** by interacting with an airline\'s booking system.\n- **Search a company\'s internal product catalog** to answer a customer\'s specific query.\n- **Send an email** via an email service.',
+      whyItMatters: 'An effective **Model Context Protocol (MCP)** drastically expands what AI models can do. It allows them to move beyond just conversation or text generation to perform complex, real-world actions, making them much more powerful and versatile tools for automation and problem-solving.',
+    },
+  },
+  {
+    id: generateId('Inference'),
+    name: 'Inference',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'The process where a trained AI model takes a new input (like a Prompt) and generates an output or makes a prediction. It\'s the "runtime" phase of an AI model.',
+      analogy: 'If training is like a student studying for an exam, then inference is like the student actually taking the exam and providing answers based on what they\'ve learned.',
+      example: 'When you type a question into an AI chatbot and it gives you a response, that\'s the LLM performing inference. When an image generator creates a picture from your text, that\'s also inference.',
+      whyItMatters: "Inference is the practical application of a trained AI model; it's how AI delivers its value by processing real-world inputs and generating useful outputs in real-time.",
+    },
+  },
+  {
+    id: generateId('Training Data'),
+    name: 'Training Data',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'The vast information (text, images, code) an AI model learns from during initial development, forming its knowledge and abilities.',
+      analogy: "A student's entire library and archives, from which they study.",
+      example: 'Billions of web pages, books, and articles for an LLM.',
+      elaboration: 'The quality, quantity, and diversity of this data are paramount. If the Training Data is biased, incomplete, or contains errors, the AI model will inherit and potentially amplify those issues, leading to biased or inaccurate outputs. Curating clean, representative, and ethical training datasets is a massive and ongoing effort in AI development.',
+      whyItMatters: 'Quality, quantity, and diversity of Training Data directly determine AI capabilities and potential Bias. Crucial for Data Governance and understanding AI limitations, as it dictates what the AI knows and how it behaves.',
+    },
+  },
+  {
+    id: generateId('Fine-tuning'),
+    name: 'Fine-tuning',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'Further training an already developed Generative AI model on a smaller, specific dataset to adapt it for a particular task or domain.',
+      analogy: 'A general medical doctor (the pre-trained model) who then specializes in cardiology (fine-tuning) by studying more specific heart-related cases. They now know more deeply about a niche.',
+      example: 'Taking a general **LLM** and fine-tuning it with a legal firm\'s historical case documents and legal briefs so it can accurately summarize specific types of legal precedents or draft initial responses to common legal inquiries.',
+      elaboration: 'This process takes a pre-trained "base" model and exposes it to a smaller, more specialized dataset relevant to a particular use case. This allows the model to learn specific styles, terminology, or factual knowledge pertinent to that domain without having to train a new model from scratch, which is computationally expensive. It can significantly improve performance on niche tasks.',
+      whyItMatters: 'Fine-tuning allows companies to tailor powerful general AI models for their specific needs, making them much more useful for internal applications without having to build a model from scratch.',
+    },
+  },
+  {
+    id: generateId('Reinforcement Learning from Human Feedback (RLHF)'),
+    name: 'Reinforcement Learning from Human Feedback (RLHF)',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'Humans rate Generative AI outputs, and this feedback further trains the AI to produce more helpful, accurate, and aligned responses.',
+      analogy: 'Teaching a dog tricks with rewards and corrections to guide their behavior.',
+      example: 'Humans selecting the best of three AI-generated answers, teaching the AI to produce more like it.',
+      elaboration: 'In RLHF, human evaluators provide preferences for different AI-generated outputs. This feedback is then used to train a "reward model," which in turn guides the primary Generative AI model to produce outputs that are more aligned with human values and instructions. This iterative process helps steer the AI away from undesirable behaviors (like Hallucination or generating harmful content) and towards more helpful and safe interactions.',
+      whyItMatters: 'A key reason modern LLMs are conversational and aligned with human intentions, making them safer and more useful by incorporating human preferences directly into the training loop.',
+    },
+  },
+  {
+    id: generateId('Hallucination'),
+    name: 'Hallucination',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'When a Generative AI model confidently produces false, nonsensical, or unsubstantiated information. It "makes things up."',
+      analogy: 'A confident person giving incorrect information.',
+      example: 'An LLM providing a perfectly formatted but non-existent academic paper citation.',
+      elaboration: 'Hallucinations occur because LLMs are essentially sophisticated pattern-matching systems. They generate text by predicting the most probable next token based on their Training Data. If the training data contains inconsistencies, or if the model encounters a prompt outside its learned patterns, it might generate plausible-sounding but factually incorrect information. This is a significant challenge for reliability and trust in AI outputs.',
+      whyItMatters: 'A critical challenge requiring fact-checking of AI outputs. Highlights the need for human oversight and validation in Data Governance and emphasizes that AI outputs should not be blindly trusted, especially for critical information.',
+    },
+  },
+  {
+    id: generateId('Bias'),
+    name: 'Bias',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'Unfair, inaccurate, or discriminatory AI outputs resulting from skewed information in its Training Data.',
+      analogy: 'A student assuming all doctors are male if only shown male doctors.',
+      example: 'An AI image generator consistently depicting certain professions as only one gender or ethnicity.',
+      elaboration: 'Bias in AI can stem from various sources: unrepresentative Training Data, biased human labeling during Reinforcement Learning from Human Feedback (RLHF), or even the design of the algorithms themselves. Mitigating bias involves careful data curation, diverse human feedback, and algorithmic fairness techniques, but it remains a complex and ongoing challenge. Unaddressed bias can lead to unfair outcomes, perpetuate stereotypes, and erode trust in AI systems.',
+      whyItMatters: 'Addressing Bias is crucial for ethical AI development and deployment, especially in applications impacting people or business decisions. A key Data Governance concern, as it directly impacts fairness, accountability, and transparency in AI systems.',
+    },
+  },
+
+  // AI Architectures & Capabilities
+  {
+    id: generateId('Transformer Architecture'),
+    name: 'Transformer Architecture',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A neural network design enabling AI to process and generate sequences (like text) by efficiently "paying attention" to relevant parts of the input, regardless of distance.',
+      analogy: 'Imagine you\'re trying to understand a complex conversation in a crowded room. Your brain doesn\'t just focus on the last few words; it constantly connects what\'s being said *now* to things said minutes ago, who said what, and even subtle cues. You "pay attention" to all relevant pieces of information, no matter how far apart they are in the conversation. The Transformer does this for words in a sentence.',
+      example: 'Before Transformers, if you gave an AI a very long sentence or document, it might struggle to understand how words at the beginning related to words at the end, leading to awkward translations or summaries. Transformers allow the AI to "see" and weigh the importance of *all* words simultaneously. This is why modern AI can accurately translate entire paragraphs, write coherent long-form articles, or summarize complex reports, because it understands the deep connections across the text.',
+      elaboration: 'The core innovation of the Transformer is its "self-attention" mechanism. This mechanism allows the model to weigh the importance of all other words in a sentence when processing a single word, capturing long-range dependencies and contextual relationships far more effectively than previous architectures. This parallel processing capability also makes Transformers highly efficient for training on large datasets.',
+      whyItMatters: 'This architecture is the core technological innovation behind almost all modern Large Language Model (LLM)s and advanced Generative AI systems, enabling their remarkable abilities in understanding and generating complex human language.',
+    },
+    interactiveTools: [
+      {
+        name: 'Transformer Explainer',
+        url: 'https://poloclub.github.io/transformer-explainer/',
+        description: 'A tool by Polo Club of Data Science, Georgia Tech, to explain Transformer models. May not be high level enough for true beginners.',
+      },
+    ],
+  },
+  {
+    id: generateId('Reasoning Models'),
+    name: 'Reasoning Models',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'AI models designed to "think" step-by-step, performing logical inference, planning, and problem-solving, rather than simply predicting the next token based on probability.',
+      analogy: 'Think of a human detective meticulously piecing together clues, drawing conclusions, and forming a logical chain of events, rather than just guessing the outcome. They follow a process of deduction.',
+      example: 'A **Reasoning Model** could be given a complex medical case with symptoms, test results, and patient history, and it would systematically analyze the information, consider possible diagnoses, and propose a treatment plan, explaining its logical steps. This differs from an **LLM** that might just generate a plausible-sounding diagnosis without true step-by-step logical processing.',
+      elaboration: 'While many **Large Language Model (LLM)**s excel at generating fluent and coherent text, their core mechanism often relies on predicting the most probable next word or phrase. **Reasoning Models**, however, are designed with additional components or training specifically to perform explicit chains of thought, break down problems into sub-problems, and apply logical rules or symbolic manipulation. This allows them to arrive at solutions through a verifiable sequence of steps, making their conclusions more robust and interpretable, particularly for tasks requiring mathematical precision, strategic planning, or deep causal understanding.',
+      whyItMatters: '**Reasoning Models** are crucial for AI to tackle complex, multi-step problems that require true understanding and logical deduction, moving beyond pattern matching to more robust and verifiable problem-solving in areas like scientific discovery, strategic planning, or complex diagnostics.',
+    },
+  },
+  {
+    id: generateId('Diffusion Models'),
+    name: 'Diffusion Models',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A powerful Generative AI model that creates new data (especially images and more recently with text) by gradually reversing a noise-adding process, "denoising" from pure static to a clear image.',
+      analogy: 'Clarifying a blurry, static-filled TV screen into a perfect new image.',
+      example: 'Generating photorealistic images from Prompts (Midjourney, DALL-E 2).',
+      elaboration: 'Diffusion models operate in two phases. The "forward diffusion" process involves gradually adding Gaussian noise to an image over many steps until it becomes pure random noise. During training, the model learns to predict and reverse each of these noise-adding steps. The "reverse diffusion" process is the generative part: starting from pure noise, the model iteratively removes noise, guided by what it learned in the forward process, to progressively transform the static into a coherent, high-quality, and *novel* image. Both processes are crucial because the model learns *how* to generate by understanding *how* data degrades into noise.',
+      whyItMatters: 'Currently state-of-the-art for image/video generation, driving visual creativity in design, art, and entertainment, and enabling new applications in content creation and digital media.',
+    },
+    // No clear interactive tool URL provided in the user's text for Diffusion Explainer.
+  },
+  {
+    id: generateId('Multimodal Models'),
+    name: 'Multimodal Models',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'AI systems capable of processing and generating content across multiple types of data simultaneously, such as text, images, audio, and video.', // Corrected simpleDescription to simpleDefinition
+      analogy: 'Like a human who can understand a conversation by listening, watching body language, and reading facial expressions all at once, and then respond using voice, gestures, or writing.',
+      example: 'An AI that can generate a video from a text description, create a text caption for an image, or describe an image using both visual input and audio cues.',
+      whyItMatters: 'Multimodal AI represents a significant leap towards more human-like AI understanding and interaction, enabling richer applications that blend different forms of information for more comprehensive tasks.',
+    },
+  },
+  {
+    id: generateId('Neural Network'),
+    name: 'Neural Network',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A computational model inspired by the structure and function of the human brain, consisting of interconnected "nodes" or "neurons" organized in layers, designed to recognize patterns and learn from data.',
+      analogy: 'Think of it like a team of interconnected specialists. Each specialist (neuron) processes a small piece of information and passes it on, and by working together, the whole team can solve complex problems.',
+      example: 'Used in image recognition (identifying faces in photos), speech recognition (voice assistants), and the core of LLMs like the Transformer Architecture.',
+      whyItMatters: 'Neural Networks are the fundamental architecture underpinning most advanced AI, including all Generative AI models, enabling them to learn complex patterns and perform sophisticated tasks.',
+    },
+  },
+  {
+    id: generateId('Generative Adversarial Network (GAN)'),
+    name: 'Generative Adversarial Network (GAN)',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A Generative AI model with two competing neural networks: a "Generator" creating fakes, and a "Discriminator" identifying them, improving through competition.',
+      analogy: 'Imagine a **chef** (the Generator) who is trying to create a new, delicious dessert recipe. They keep trying different ingredient combinations and techniques. At the same time, there\'s a **food critic** (the Discriminator) whose job is to taste desserts and decide if they are truly innovative and well-made, or just mediocre. The chef learns to improve their recipes by getting feedback from the critic (when their desserts are rated poorly). The critic, in turn, gets better at discerning quality by tasting many desserts from both the innovative chef and other average cooks. This constant, competitive feedback loop makes the chef\'s creations increasingly impressive and the critic\'s palate increasingly refined.',
+      example: 'GANs are famously used to create highly realistic synthetic data. For example, they can generate:\n- **Photorealistic images of human faces that do not belong to any real person.** These are often used in stock photography or as profile pictures for fictional identities.\n- **New product designs or architectural blueprints** that blend existing styles in novel ways.\n- **Synthetic medical images** for training diagnostic AI without using sensitive patient data.',
+      elaboration: 'The Generator network\'s goal is to produce data (e.g., images) that are indistinguishable from real data. The Discriminator network\'s job is to distinguish between real data and the Generator\'s fakes. As they train, the Generator gets better at creating convincing fakes, and the Discriminator gets better at spotting them. This adversarial process drives both networks to improve, leading to highly realistic generated content.',
+      whyItMatters: 'Groundbreaking for realistic content generation; understanding GANs helps appreciate Generative AI evolution, even as Diffusion Models dominate. They paved the way for many advanced generative techniques.',
+    },
+  },
+  {
+    id: generateId('Machine Learning (ML)'),
+    name: 'Machine Learning (ML)',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A subset of Artificial Intelligence (AI) that focuses on enabling systems to learn from data, identify patterns, and make decisions with minimal human intervention.',
+      analogy: 'Imagine teaching a child to recognize different animals by showing them many pictures, rather than giving them a fixed set of rules. ML is how computers learn from "experience" (data).',
+      example: 'Recommendation engines (like Netflix suggestions), fraud detection systems, and predictive analytics in business are all powered by ML.',
+      whyItMatters: 'ML is the primary method by which modern AI systems, including all Generative AI models, acquire their intelligence and adapt to new information.',
+    },
+  },
+
+  // Future & Research Landscape
+  {
+    id: generateId('AGI (Artificial General Intelligence)'),
+    name: 'AGI (Artificial General Intelligence)',
+    category: 'Future & Research Landscape',
+    content: {
+      simpleDefinition: 'AI with **human-level intelligence** across all intellectual tasks, capable of understanding, learning, and applying intelligence broadly.',
+      analogy: 'A true "thinking machine" like C-3PO, performing diverse tasks and understanding human nuances.',
+      example: 'An AGI could write poems, negotiate contracts, and perform surgery.',
+      elaboration: 'AGI would not be limited to a specific domain (like playing chess or generating text). It would possess cognitive abilities comparable to a human, including common sense, creativity, and the ability to learn from experience across various fields. Achieving AGI is a monumental challenge and a subject of intense debate.',
+      whyItMatters: 'AGI represents a major AI research goal with profound societal implications, including for Data Governance and AI integration, as it will fundamentally change the nature of work and human-technology interaction.',
+    },
+  },
+  {
+    id: generateId('ASI (Artificial Super Intelligence)'),
+    name: 'ASI (Artificial Super Intelligence)',
+    category: 'Future & Research Landscape',
+    content: {
+      simpleDefinition: 'AI **far surpassing human intelligence** in all fields, including creativity, wisdom, and social skills.',
+      analogy: 'A mind beyond human comprehension, solving problems humans haven\'t conceived.',
+      example: 'An ASI could develop new scientific theories in minutes or solve global challenges with ease.',
+      elaboration: 'ASI is a concept that goes beyond merely matching human intelligence; it posits an intelligence that is orders of magnitude greater. This could lead to an "[intelligence explosion](https://www.forethought.org/research/three-types-of-intelligence-explosion)" where the ASI rapidly improves itself, creating an even more powerful intelligence. This concept raises significant ethical and control challenges, often debated in the context of existential risk and the future of humanity.',
+      whyItMatters: 'This concept is moving from theoretical to a question of when do we get ASI, it drives discussions on future ethics and control of advanced AI, highlighting responsible AI development and the need for robust safeguards as AI capabilities continue to advance.',
+    },
   },
 ];
 
