@@ -23,7 +23,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel
 } from '@/components/ui/sidebar';
-import Link from 'next/link';
+import type { Term } from '@/lib/types';
 
 export default function AIPediaPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,7 +31,7 @@ export default function AIPediaPage() {
   const [sortBy, setSortBy] = useState<'category' | 'alphabetical'>('category');
 
   const filteredTerms = useMemo(() => {
-    let displayTerms = terms;
+    let displayTerms = [...terms]; // Create a mutable copy
 
     if (selectedCategory) {
       displayTerms = displayTerms.filter(term => term.category === selectedCategory);
@@ -58,9 +58,23 @@ export default function AIPediaPage() {
         return a.name.localeCompare(b.name);
       });
     }
-
     return displayTerms;
   }, [searchTerm, selectedCategory, sortBy]);
+
+  const termsByCategory = useMemo(() => {
+    if (sortBy !== 'category' || selectedCategory !== null) {
+      return null;
+    }
+    const grouped: Record<string, Term[]> = {};
+    categories.forEach(category => {
+      const termsInThisCategory = filteredTerms.filter(term => term.category === category);
+      if (termsInThisCategory.length > 0) {
+        grouped[category] = termsInThisCategory;
+      }
+    });
+    return grouped;
+  }, [filteredTerms, sortBy, selectedCategory]);
+
 
   return (
     <SidebarProvider defaultOpen>
@@ -126,7 +140,10 @@ export default function AIPediaPage() {
               {categories.map((category) => (
                 <SidebarMenuItem key={category}>
                   <SidebarMenuButton
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setSortBy('category'); // When a category is selected, ensure sort is by category
+                    }}
                     isActive={selectedCategory === category}
                     tooltip={`View terms in ${category}`}
                     className="w-full"
@@ -181,12 +198,33 @@ export default function AIPediaPage() {
             {selectedCategory ? selectedCategory : (sortBy === 'alphabetical' ? 'All Terms (A-Z)' : 'All Terms (by Category)')}
           </h2>
         </header>
-        <ScrollArea className="h-[calc(100vh-4rem-var(--intro-section-height,0px))]"> {/* Adjusted height calculation needed if intro section height is dynamic */}
-          <main className="flex-1 p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredTerms.length > 0 ? (
-              filteredTerms.map(term => (
-                <TermCard key={term.id} term={term} />
-              ))
+        <ScrollArea className="h-[calc(100vh-4rem-var(--intro-section-height,0px))]">
+          <div className="p-6">
+            {termsByCategory ? (
+              categories.map(category => {
+                const termsInThisCategory = termsByCategory[category];
+                if (!termsInThisCategory || termsInThisCategory.length === 0) {
+                  return null;
+                }
+                return (
+                  <section key={category} className="mb-12">
+                    <h3 className="text-2xl font-semibold font-headline text-primary mb-6 pb-2 border-b border-primary/30">
+                      {category}
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {termsInThisCategory.map(term => (
+                        <TermCard key={term.id} term={term} />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })
+            ) : filteredTerms.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {filteredTerms.map(term => (
+                  <TermCard key={term.id} term={term} />
+                ))}
+              </div>
             ) : (
               <div className="text-center text-muted-foreground py-10 md:col-span-2">
                 <Search className="mx-auto h-12 w-12 mb-4" />
@@ -194,7 +232,15 @@ export default function AIPediaPage() {
                 <p>Try adjusting your search or category selection.</p>
               </div>
             )}
-          </main>
+             {/* Fallback for no results in category view if somehow termsByCategory is null but filteredTerms is empty */}
+             {termsByCategory && Object.keys(termsByCategory).length === 0 && filteredTerms.length === 0 && (
+                <div className="text-center text-muted-foreground py-10 md:col-span-2">
+                  <Search className="mx-auto h-12 w-12 mb-4" />
+                  <p className="text-lg">No terms found for the current selection.</p>
+                  <p>Try adjusting your search or category selection.</p>
+                </div>
+             )}
+          </div>
         </ScrollArea>
       </SidebarInset>
     </SidebarProvider>
