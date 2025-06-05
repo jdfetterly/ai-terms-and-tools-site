@@ -8,7 +8,7 @@ import MarkdownRenderer from './MarkdownRenderer';
 import InteractiveToolEmbed from './InteractiveToolEmbed';
 import { generateExampleAction } from '@/app/actions';
 import React, { useState } from 'react';
-import { Loader2, Wand2 } from 'lucide-react';
+import { Loader2, Wand2, PlaySquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import {
   Accordion,
@@ -16,6 +16,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface TermCardProps {
   term: Term;
@@ -43,12 +48,24 @@ export default function TermCard({ term }: TermCardProps) {
   };
 
   return (
-    <Card id={term.id} className="mb-6 shadow-lg_ overflow-hidden">
+    <Card id={term.id} className="mb-6 shadow-lg_ overflow-hidden flex flex-col">
       <CardHeader className="bg-card-foreground/5">
         <CardTitle className="text-2xl font-headline text-primary">{term.name}</CardTitle>
-        <CardDescription className="text-sm text-muted-foreground">{term.category}</CardDescription>
+        <div className="flex items-center justify-between mt-1">
+          <CardDescription className="text-sm text-muted-foreground">{term.category}</CardDescription>
+          {term.interactiveTools && term.interactiveTools.length > 0 && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <PlaySquare className="h-5 w-5 text-accent cursor-default" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Interactive tool available</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+        </div>
       </CardHeader>
-      <CardContent className="pt-4">
+      <CardContent className="pt-4 flex-1 flex flex-col">
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-primary mb-1">Simple Definition</h3>
           <MarkdownRenderer content={term.content.simpleDefinition} />
