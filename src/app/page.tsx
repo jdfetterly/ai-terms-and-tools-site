@@ -49,8 +49,11 @@ export default function AIPediaPage() {
       displayTerms.sort((a, b) => a.name.localeCompare(b.name));
     } else { // Default to category sort, then alphabetical within category
       displayTerms.sort((a, b) => {
-        if (a.category.localeCompare(b.category) !== 0) {
-          return a.category.localeCompare(b.category);
+        const categoryAIndex = categories.indexOf(a.category);
+        const categoryBIndex = categories.indexOf(b.category);
+
+        if (categoryAIndex !== categoryBIndex) {
+          return categoryAIndex - categoryBIndex;
         }
         return a.name.localeCompare(b.name);
       });
@@ -175,7 +178,7 @@ export default function AIPediaPage() {
         <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6">
           <SidebarTrigger className="md:hidden" />
           <h2 className="text-xl font-semibold font-headline">
-            {selectedCategory ? selectedCategory : (sortBy === 'alphabetical' ? 'All Terms (A-Z)' : 'All Terms')}
+            {selectedCategory ? selectedCategory : (sortBy === 'alphabetical' ? 'All Terms (A-Z)' : 'All Terms (by Category)')}
           </h2>
         </header>
         <ScrollArea className="h-[calc(100vh-4rem-var(--intro-section-height,0px))]"> {/* Adjusted height calculation needed if intro section height is dynamic */}

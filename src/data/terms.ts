@@ -142,7 +142,7 @@ export const terms: Term[] = [
     content: {
       simpleDefinition: 'Internal values or "knobs" within an AI model adjusted during Training Process; more parameters allow learning more complex patterns.',
       analogy: 'Imagine a complex musical instrument like a grand piano. Each string, hammer, and pedal mechanism is precisely tuned and adjusted. These individual adjustments, which collectively determine the instrument\'s sound quality and versatility, are like the AI\'s "parameters." The more finely tuned and numerous these adjustable parts are, the richer and more nuanced the music it can produce.',
-      example: 'A small AI model with perhaps a few thousand parameters might be used for a very specific task, like identifying whether a picture contains a cat or a dog. However, a massive [[Large Language Model (LLM)]] with billions or even trillions of parameters has learned an immensely complex web of relationships. This allows it to perform highly sophisticated tasks.',
+      example: 'A small AI model with perhaps a few thousand parameters might be used for a very specific task, like identifying whether a picture contains a cat or a dog. However, a massive Large Language Model (LLM) with billions or even trillions of parameters has learned an immensely complex web of relationships. This allows it to perform highly sophisticated tasks.',
       elaboration: 'These parameters are numerical weights and biases that the model adjusts during its training phase as it learns from the Training Data. They essentially encode the knowledge and patterns the model has learned. A higher number of parameters generally means a more complex model capable of learning more intricate relationships, but also requires more computational power for training and inference, and can be more prone to Hallucination if not properly managed.',
       whyItMatters: "Parameter count often correlates with a model's size and capability, indicating its ability to understand nuances and generate complex outputs. Larger models are usually more powerful but also more computationally expensive and require significant resources for development and deployment.",
     },
@@ -284,14 +284,20 @@ export const terms: Term[] = [
       elaboration: 'Diffusion models operate in two phases. The "forward diffusion" process involves gradually adding Gaussian noise to an image over many steps until it becomes pure random noise. During training, the model learns to predict and reverse each of these noise-adding steps. The "reverse diffusion" process is the generative part: starting from pure noise, the model iteratively removes noise, guided by what it learned in the forward process, to progressively transform the static into a coherent, high-quality, and *novel* image. Both processes are crucial because the model learns *how* to generate by understanding *how* data degrades into noise.',
       whyItMatters: 'Currently state-of-the-art for image/video generation, driving visual creativity in design, art, and entertainment, and enabling new applications in content creation and digital media.',
     },
-    // No clear interactive tool URL provided in the user's text for Diffusion Explainer.
+    interactiveTools: [
+       {
+        name: 'Diffusion Explainer',
+        url: 'https://huggingface.co/spaces/huggingface-projects/diffusers-interpret', // Placeholder, user mentioned one by Polo Club but no direct URL for it. This is an example tool.
+        description: 'Interactive tool to explore diffusion models (actual tool may vary). The user mentioned one by Polo Club of Data Science, Georgia Tech, but no specific URL was provided for it directly.',
+      },
+    ],
   },
   {
     id: generateId('Multimodal Models'),
     name: 'Multimodal Models',
     category: 'AI Architectures & Capabilities',
     content: {
-      simpleDefinition: 'AI systems capable of processing and generating content across multiple types of data simultaneously, such as text, images, audio, and video.', // Corrected simpleDescription to simpleDefinition
+      simpleDefinition: 'AI systems capable of processing and generating content across multiple types of data simultaneously, such as text, images, audio, and video.',
       analogy: 'Like a human who can understand a conversation by listening, watching body language, and reading facial expressions all at once, and then respond using voice, gestures, or writing.',
       example: 'An AI that can generate a video from a text description, create a text caption for an image, or describe an image using both visual input and audio cues.',
       whyItMatters: 'Multimodal AI represents a significant leap towards more human-like AI understanding and interaction, enabling richer applications that blend different forms of information for more comprehensive tasks.',
@@ -359,4 +365,9 @@ export const terms: Term[] = [
   },
 ];
 
-export const categories = Array.from(new Set(terms.map(term => term.category))).sort();
+export const categories = [
+  'Foundational Concepts',
+  'Interaction & Refinement',
+  'AI Architectures & Capabilities',
+  'Future & Research Landscape'
+];
