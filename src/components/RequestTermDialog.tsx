@@ -16,12 +16,12 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { requestNewTermAction } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import type { RequestNewTermInput } from '@/lib/types';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const requestTermSchema = z.object({
   termName: z.string().min(1, { message: 'Term name is required.' }),
@@ -85,7 +85,7 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] flex flex-col max-h-[90vh]">
         <DialogHeader>
           <DialogTitle>Request a New Term</DialogTitle>
           <DialogDescription>
@@ -93,104 +93,108 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-4">
-            <FormField
-              control={form.control}
-              name="termName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Term Name <span className="text-destructive">*</span></FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., Zero-shot Learning" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="simpleDefinition"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Simple Definition</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="A concise explanation of the term." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="elaboration"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Elaboration</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="More detailed explanation, nuances, or context." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="whyItMatters"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Why it Matters</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="The significance or impact of this term." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
-            <div className="space-y-2 pt-2">
-              <h3 className="text-sm font-medium text-muted-foreground">Interactive Tool (Optional)</h3>
-              <FormField
-                control={form.control}
-                name="interactiveToolName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tool Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g., Awesome Tool Visualizer" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="interactiveToolUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tool URL</FormLabel>
-                    <FormControl>
-                      <Input placeholder="https://example.com/tool" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="interactiveToolDescription"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tool Description</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="A brief description of the interactive tool." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden space-y-4">
+            <ScrollArea className="flex-1 pr-2">
+              <div className="space-y-6 py-4 pr-4">
+                <FormField
+                  control={form.control}
+                  name="termName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Term Name <span className="text-destructive">*</span></FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., Zero-shot Learning" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="simpleDefinition"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Simple Definition</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="A concise explanation of the term." {...field} rows={3} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="elaboration"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Elaboration</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="More detailed explanation, nuances, or context." {...field} rows={3} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="whyItMatters"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Why it Matters</FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="The significance or impact of this term." {...field} rows={3} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <div className="space-y-2 pt-2">
+                  <h3 className="text-sm font-medium text-muted-foreground">Interactive Tool (Optional)</h3>
+                  <FormField
+                    control={form.control}
+                    name="interactiveToolName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tool Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="e.g., Awesome Tool Visualizer" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="interactiveToolUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tool URL</FormLabel>
+                        <FormControl>
+                          <Input placeholder="https://example.com/tool" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="interactiveToolDescription"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tool Description</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="A brief description of the interactive tool." {...field} rows={3} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+            </ScrollArea>
 
-            <DialogFooter>
+            <DialogFooter className="pt-4 border-t mt-auto">
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
                 Cancel
               </Button>
