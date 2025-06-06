@@ -65,7 +65,7 @@ export default function AIPediaPage() {
 
     if (sortBy === 'alphabetical') {
       displayTerms.sort((a, b) => a.name.localeCompare(b.name));
-    } else {
+    } else { // Sort by category, respecting predefined order
       displayTerms.sort((a, b) => {
         const categoryAIndex = categories.indexOf(a.category);
         const categoryBIndex = categories.indexOf(b.category);
@@ -81,7 +81,7 @@ export default function AIPediaPage() {
 
   const termsGroupedByCategory = useMemo(() => {
     if (sortBy !== 'category' || selectedCategory !== null) {
-      return null; // Only group when 'All Terms (by Category)' is selected
+      return null;
     }
     const grouped: Record<string, Term[]> = {};
     categories.forEach(category => {
@@ -91,7 +91,7 @@ export default function AIPediaPage() {
       }
     });
     return grouped;
-  }, [filteredTerms, sortBy, selectedCategory]);
+  }, [filteredTerms, sortBy, selectedCategory, categories]);
 
 
   return (
@@ -182,8 +182,8 @@ export default function AIPediaPage() {
         </SidebarFooter>
       </Sidebar>
 
-      <SidebarInset>
-        <div ref={introRef} className="p-6 border-b">
+      <SidebarInset className="flex flex-col"> {/* Ensure SidebarInset is a flex column */}
+        <div ref={introRef} className="sticky top-0 z-20 bg-background p-6 border-b">
           <h1 className="text-3xl lg:text-4xl font-bold font-headline mb-2 text-primary">
             The 2025 AI Glossary
           </h1>
@@ -214,17 +214,17 @@ export default function AIPediaPage() {
           </div>
         </div>
 
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6">
+        <header
+          className="sticky z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6"
+          style={{ top: introSectionHeight ? `${introSectionHeight}px` : '0px' }}
+        >
           <SidebarTrigger className="md:hidden" />
           <h2 className="text-xl font-semibold font-headline">
             {selectedCategory ? selectedCategory : (sortBy === 'alphabetical' ? 'All Terms (A-Z)' : 'All Terms (by Category)')}
           </h2>
         </header>
         
-        <ScrollArea 
-          className="h-[calc(100vh-4rem)]" 
-          style={{ '--intro-section-height': `${introSectionHeight}px`, height: `calc(100vh - 4rem - var(--intro-section-height))` } as React.CSSProperties}
-        >
+        <ScrollArea className="flex-1"> {/* flex-1 makes it take remaining space */}
           <div className="p-6">
             {termsGroupedByCategory ? (
               Object.keys(termsGroupedByCategory).length > 0 ? (
