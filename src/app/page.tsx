@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { terms as allTermsData, categories } from '@/data/terms';
+import { terms as allTermsData, categories as predefinedCategories } from '@/data/terms';
 import TermCard from '@/components/TermCard';
 import RequestTermDialog from '@/components/RequestTermDialog';
 import { Input } from '@/components/ui/input';
@@ -30,22 +30,20 @@ export default function AIPediaPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<'category' | 'alphabetical'>('category');
-  const [introSectionHeight, setIntroSectionHeight] = useState(0);
+  const [staticHeaderHeight, setStaticHeaderHeight] = useState(0);
   const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
 
-  const introRef = React.useRef<HTMLDivElement>(null);
+  const staticHeaderRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (introRef.current) {
-      setIntroSectionHeight(introRef.current.offsetHeight);
-    }
-    const handleResize = () => {
-      if (introRef.current) {
-        setIntroSectionHeight(introRef.current.offsetHeight);
+    const calculateHeight = () => {
+      if (staticHeaderRef.current) {
+        setStaticHeaderHeight(staticHeaderRef.current.offsetHeight);
       }
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    calculateHeight(); // Initial calculation
+    window.addEventListener('resize', calculateHeight);
+    return () => window.removeEventListener('resize', calculateHeight);
   }, []);
 
   const filteredTerms = useMemo(() => {
@@ -67,8 +65,8 @@ export default function AIPediaPage() {
       displayTerms.sort((a, b) => a.name.localeCompare(b.name));
     } else { // Sort by category, respecting predefined order
       displayTerms.sort((a, b) => {
-        const categoryAIndex = categories.indexOf(a.category);
-        const categoryBIndex = categories.indexOf(b.category);
+        const categoryAIndex = predefinedCategories.indexOf(a.category);
+        const categoryBIndex = predefinedCategories.indexOf(b.category);
 
         if (categoryAIndex !== categoryBIndex) {
           return categoryAIndex - categoryBIndex;
@@ -84,14 +82,14 @@ export default function AIPediaPage() {
       return null;
     }
     const grouped: Record<string, Term[]> = {};
-    categories.forEach(category => {
+    predefinedCategories.forEach(category => {
       const termsInThisCategory = filteredTerms.filter(term => term.category === category);
       if (termsInThisCategory.length > 0) {
         grouped[category] = termsInThisCategory;
       }
     });
     return grouped;
-  }, [filteredTerms, sortBy, selectedCategory, categories]);
+  }, [filteredTerms, sortBy, selectedCategory, predefinedCategories]);
 
 
   return (
@@ -155,7 +153,7 @@ export default function AIPediaPage() {
           <SidebarGroup className="p-2">
             <SidebarGroupLabel>Categories</SidebarGroupLabel>
             <SidebarMenu>
-              {categories.map((category) => (
+              {predefinedCategories.map((category) => (
                 <SidebarMenuItem key={category}>
                   <SidebarMenuButton
                     onClick={() => {
@@ -182,41 +180,19 @@ export default function AIPediaPage() {
         </SidebarFooter>
       </Sidebar>
 
-      <SidebarInset className="flex flex-col"> {/* Ensure SidebarInset is a flex column */}
-        <div ref={introRef} className="sticky top-0 z-20 bg-background p-6 border-b">
+      <SidebarInset className="flex flex-col">
+        <div ref={staticHeaderRef} className="sticky top-0 z-30 bg-background p-6 border-b">
           <h1 className="text-3xl lg:text-4xl font-bold font-headline mb-2 text-primary">
             The 2025 AI Glossary
           </h1>
-          <p className="text-lg text-foreground/90 mb-8">
+          <p className="text-lg text-foreground/90">
             Key Terms and Concepts You Actually Need to Know
           </p>
-
-          <div className="space-y-4">
-            <div className="flex items-start gap-4 p-4 bg-card rounded-lg shadow">
-              <Sparkles className="h-8 w-8 text-accent shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-semibold text-card-foreground mb-1">Your Guide to GenAI</h3>
-                <p className="text-sm text-muted-foreground">
-                  A plain-English guide for navigating Generative AI. Learn to speak the language of Artificial Intelligence.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 p-4 bg-card rounded-lg shadow">
-              <Puzzle className="h-8 w-8 text-accent shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-semibold text-card-foreground mb-1">Explore & Understand</h3>
-                <p className="text-sm text-muted-foreground">
-                  For some of the terms below, I’ve either built or found interactive tools to help you grasp the concepts.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <header
-          className="sticky z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6"
-          style={{ top: introSectionHeight ? `${introSectionHeight}px` : '0px' }}
+          className="sticky z-20 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6"
+          style={{ top: staticHeaderHeight ? `${staticHeaderHeight}px` : '0px' }}
         >
           <SidebarTrigger className="md:hidden" />
           <h2 className="text-xl font-semibold font-headline">
@@ -224,11 +200,33 @@ export default function AIPediaPage() {
           </h2>
         </header>
         
-        <ScrollArea className="flex-1"> {/* flex-1 makes it take remaining space */}
+        <ScrollArea className="flex-1">
           <div className="p-6">
+            <div className="space-y-4 mb-8">
+              <div className="flex items-start gap-4 p-4 bg-card rounded-lg shadow">
+                <Sparkles className="h-8 w-8 text-accent shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-card-foreground mb-1">Your Guide to GenAI</h3>
+                  <p className="text-sm text-muted-foreground">
+                    A plain-English guide for navigating Generative AI. Learn to speak the language of Artificial Intelligence.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-4 bg-card rounded-lg shadow">
+                <Puzzle className="h-8 w-8 text-accent shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-card-foreground mb-1">Explore & Understand</h3>
+                  <p className="text-sm text-muted-foreground">
+                    For some of the terms below, I’ve either built or found interactive tools to help you grasp the concepts.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {termsGroupedByCategory ? (
               Object.keys(termsGroupedByCategory).length > 0 ? (
-                categories.map(category => {
+                predefinedCategories.map(category => {
                   const termsInThisCategory = termsGroupedByCategory[category];
                   if (!termsInThisCategory || termsInThisCategory.length === 0) {
                     return null;
