@@ -2,9 +2,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -16,22 +13,10 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { requestNewTermAction } from '@/app/actions';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
-import type { RequestNewTermInput } from '@/lib/types';
 import { ScrollArea } from '@/components/ui/scroll-area';
-
-const requestTermSchema = z.object({
-  termName: z.string().min(1, { message: 'Term name is required.' }),
-  simpleDefinition: z.string().optional(),
-  elaboration: z.string().optional(),
-  whyItMatters: z.string().optional(),
-  interactiveToolName: z.string().optional(),
-  interactiveToolUrl: z.string().url({ message: 'Please enter a valid URL.' }).optional().or(z.literal('')),
-  interactiveToolDescription: z.string().optional(),
-});
 
 interface RequestTermDialogProps {
   isOpen: boolean;
@@ -40,178 +25,143 @@ interface RequestTermDialogProps {
 
 export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
-  const form = useForm<RequestNewTermInput>({
-    resolver: zodResolver(requestTermSchema),
-    defaultValues: {
-      termName: '',
-      simpleDefinition: '',
-      elaboration: '',
-      whyItMatters: '',
-      interactiveToolName: '',
-      interactiveToolUrl: '',
-      interactiveToolDescription: '',
-    },
-  });
+  const [termName, setTermName] = useState('');
+  const [simpleDefinition, setSimpleDefinition] = useState('');
+  const [elaboration, setElaboration] = useState('');
+  const [whyItMatters, setWhyItMatters] = useState('');
+  const [interactiveToolName, setInteractiveToolName] = useState('');
+  const [interactiveToolUrl, setInteractiveToolUrl] = useState('');
+  const [interactiveToolDescription, setInteractiveToolDescription] = useState('');
 
-  const onSubmit = async (data: RequestNewTermInput) => {
-    setIsSubmitting(true);
-    try {
-      const result = await requestNewTermAction(data);
-      if (result.success) {
-        toast({
-          title: 'Success',
-          description: result.message,
-        });
-        form.reset();
-        onOpenChange(false);
-      } else {
-        toast({
-          title: 'Error',
-          description: result.message,
-          variant: 'destructive',
-        });
-      }
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'An unexpected error occurred. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+  const { toast } = useToast();
+
+  const resetForm = () => {
+    setTermName('');
+    setSimpleDefinition('');
+    setElaboration('');
+    setWhyItMatters('');
+    setInteractiveToolName('');
+    setInteractiveToolUrl('');
+    setInteractiveToolDescription('');
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      resetForm();
+    }
+    onOpenChange(open);
+  }
+
   const handleFormSubmit = () => {
-    form.handleSubmit(onSubmit)();
+    if (!termName.trim()) {
+      toast({
+        title: 'Error',
+        description: 'Term name is required.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // IMPORTANT: Replace with your email address
+    const recipientEmail = 'your-email@example.com';
+
+    const subject = `New AI Lexicon Term Request: ${termName}`;
+    const body = `
+A new term has been requested for the AI Lexicon.
+
+Term Name:
+${termName}
+
+Simple Definition:
+${simpleDefinition || '(not provided)'}
+
+Elaboration:
+${elaboration || '(not provided)'}
+
+Why it Matters:
+${whyItMatters || '(not provided)'}
+
+---
+Interactive Tool Details (Optional)
+---
+
+Tool Name: ${interactiveToolName || '(not provided)'}
+Tool URL: ${interactiveToolUrl || '(not provided)'}
+Tool Description: ${interactiveToolDescription || '(not provided)'}
+    `;
+
+    const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Give a moment for the UI to update before opening the mail client
+    setTimeout(() => {
+        window.location.href = mailtoLink;
+        setIsSubmitting(false);
+        handleOpenChange(false);
+        toast({
+          title: 'Success!',
+          description: 'Your email client has been opened to send the request.',
+        });
+    }, 500);
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[600px] flex flex-col max-h-[90vh]">
         <DialogHeader>
           <DialogTitle>Request a New Term</DialogTitle>
           <DialogDescription>
-            Help expand the AI Lexicon! Fill in the details for the term you&apos;d like to see added.
+            Help expand the AI Lexicon! Fill in the details below. This will open your default email client to send the request.
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            id="request-term-form"
-            className="flex-1 min-h-0 relative" // Takes up space, allows shrinking, and positions ScrollArea
-          >
-            <ScrollArea className="absolute inset-0"> {/* Fills the form element */}
-              <div className="space-y-6 p-6"> {/* Padding inside scrollable area */}
-                <FormField
-                  control={form.control}
-                  name="termName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Term Name <span className="text-destructive">*</span></FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g., Zero-shot Learning" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="simpleDefinition"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Simple Definition</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="A concise explanation of the term." {...field} rows={3} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="elaboration"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Elaboration</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="More detailed explanation, nuances, or context." {...field} rows={3} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="whyItMatters"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Why it Matters</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="The significance or impact of this term." {...field} rows={3} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+        <div className="flex-1 min-h-0 relative">
+          <ScrollArea className="absolute inset-0">
+            <div className="space-y-6 p-6">
+              <div className="space-y-2">
+                <Label htmlFor="termName">Term Name <span className="text-destructive">*</span></Label>
+                <Input id="termName" placeholder="e.g., Zero-shot Learning" value={termName} onChange={(e) => setTermName(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="simpleDefinition">Simple Definition</Label>
+                <Textarea id="simpleDefinition" placeholder="A concise explanation of the term." value={simpleDefinition} onChange={(e) => setSimpleDefinition(e.target.value)} rows={3} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="elaboration">Elaboration</Label>
+                <Textarea id="elaboration" placeholder="More detailed explanation, nuances, or context." value={elaboration} onChange={(e) => setElaboration(e.target.value)} rows={3} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="whyItMatters">Why it Matters</Label>
+                <Textarea id="whyItMatters" placeholder="The significance or impact of this term." value={whyItMatters} onChange={(e) => setWhyItMatters(e.target.value)} rows={3} />
+              </div>
 
-                <div className="space-y-2 pt-2">
-                  <h3 className="text-sm font-medium text-muted-foreground">Interactive Tool (Optional)</h3>
-                  <FormField
-                    control={form.control}
-                    name="interactiveToolName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Tool Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="e.g., Awesome Tool Visualizer" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="interactiveToolUrl"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Link to Interactive Tool</FormLabel>
-                        <FormControl>
-                          <Input placeholder="https://example.com/tool" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="interactiveToolDescription"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Tool Description</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="A brief description of the interactive tool." {...field} rows={3} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              <div className="space-y-4 pt-2">
+                <h3 className="text-sm font-medium text-muted-foreground">Interactive Tool (Optional)</h3>
+                <div className="space-y-2">
+                  <Label htmlFor="interactiveToolName">Tool Name</Label>
+                  <Input id="interactiveToolName" placeholder="e.g., Awesome Tool Visualizer" value={interactiveToolName} onChange={(e) => setInteractiveToolName(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                   <Label htmlFor="interactiveToolUrl">Link to Interactive Tool</Label>
+                   <Input id="interactiveToolUrl" placeholder="https://example.com/tool" value={interactiveToolUrl} onChange={(e) => setInteractiveToolUrl(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="interactiveToolDescription">Tool Description</Label>
+                  <Textarea id="interactiveToolDescription" placeholder="A brief description of the interactive tool." value={interactiveToolDescription} onChange={(e) => setInteractiveToolDescription(e.target.value)} rows={3} />
                 </div>
               </div>
-            </ScrollArea>
-          </form>
-        </Form>
-        <DialogFooter className="border-t mt-auto"> {/* mt-auto pushes footer to bottom in flex column if space allows, border-t */}
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
+            </div>
+          </ScrollArea>
+        </div>
+        <DialogFooter className="border-t pt-4">
+          <Button type="button" variant="outline" onClick={() => handleOpenChange(false)} disabled={isSubmitting}>
             Cancel
           </Button>
           <Button type="button" onClick={handleFormSubmit} disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
+                Preparing...
               </>
             ) : (
               'Submit Request'
@@ -222,4 +172,3 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
     </Dialog>
   );
 }
-

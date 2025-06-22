@@ -20,13 +20,3 @@ export interface Term {
   content: TermContent;
   interactiveTools?: InteractiveTool[];
 }
-
-export interface RequestNewTermInput {
-  termName: string;
-  simpleDefinition?: string;
-  elaboration?: string;
-  whyItMatters?: string;
-  interactiveToolName?: string;
-  interactiveToolUrl?: string;
-  interactiveToolDescription?: string;
-}
