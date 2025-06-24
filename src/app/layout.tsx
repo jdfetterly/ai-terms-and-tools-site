@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'The 2025 AI Glossary',
-  description: 'Understand basic terminology for Artificial Intelligence. A plain-English guide for navigating GenAI.',
+  title: 'Generative AI Terms and Interactive Tools',
+  description: 'Key Terms and Interactive Tools to Help You Understand Generative AI',
 };
 
 export default function RootLayout({
