@@ -1,4 +1,3 @@
-
 'use client';
 
 import type { Term, InteractiveTool } from '@/lib/types';
@@ -21,6 +20,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Badge } from '@/components/ui/badge';
 
 interface TermCardProps {
   term: Term;
@@ -54,7 +54,7 @@ export default function TermCard({ term }: TermCardProps) {
         <CardHeader className="bg-card-foreground/5">
           <CardTitle className="text-2xl font-headline text-primary">{term.name}</CardTitle>
           <div className="flex items-center justify-between mt-1">
-            <CardDescription className="text-sm text-muted-foreground">{term.category}</CardDescription>
+            <Badge variant="secondary">{term.category}</Badge>
             {term.interactiveTools && term.interactiveTools.length > 0 && (
               <Tooltip>
                 <TooltipTrigger asChild>
