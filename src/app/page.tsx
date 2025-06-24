@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
@@ -9,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { ListChecks, Search, Brain, Sparkles, Puzzle, Lightbulb } from 'lucide-react';
+import { ListChecks, Search, Sparkles, Puzzle, Lightbulb } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -107,10 +106,7 @@ export default function AIPediaPage() {
     <SidebarProvider defaultOpen>
       <Sidebar>
         <SidebarHeader className="p-4 items-center">
-            <div className="flex items-center gap-2">
-              <Brain className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-headline font-semibold">ChatBotLabs.io</h1>
-            </div>
+            <h1 className="text-2xl font-headline font-semibold">ChatBotLabs.io</h1>
         </SidebarHeader>
         <Separator />
         <SidebarContent className="p-0">
