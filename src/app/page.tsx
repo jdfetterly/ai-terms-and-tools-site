@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
@@ -79,7 +78,9 @@ export default function AIPediaPage() {
     <SidebarProvider defaultOpen>
       <Sidebar>
         <SidebarHeader className="p-4 items-center">
-            <h1 className="text-2xl font-orbitron font-semibold text-primary">ChatBotLabs.io</h1>
+            <a href="https://www.chatbotlabs.io/" target="_blank" rel="noopener noreferrer" className="text-2xl font-orbitron font-semibold text-primary hover:text-primary/90 transition-colors">
+              ChatBotLabs.io
+            </a>
         </SidebarHeader>
         <Separator />
         <SidebarContent className="p-0">
