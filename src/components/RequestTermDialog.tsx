@@ -69,7 +69,7 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
 
     const subject = `New AI Term Request: ${termName}`;
     const body = `
-A new term has been requested for the AI Lexicon.
+A new term has been requested for ChatBotLabs.io.
 
 Term Name:
 ${termName}

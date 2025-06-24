@@ -109,7 +109,7 @@ export default function AIPediaPage() {
         <SidebarHeader className="p-4 items-center">
             <div className="flex items-center gap-2">
               <Brain className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-headline font-semibold">AI Lexicon</h1>
+              <h1 className="text-2xl font-headline font-semibold">ChatBotLabs.io</h1>
             </div>
         </SidebarHeader>
         <Separator />
@@ -173,7 +173,7 @@ export default function AIPediaPage() {
             <Lightbulb className="mr-2 h-4 w-4" />
             Request New Term
           </Button>
-          <p className="text-xs text-muted-foreground text-center">© {new Date().getFullYear()} AI Lexicon</p>
+          <p className="text-xs text-muted-foreground text-center">© {new Date().getFullYear()} ChatBotLabs.io</p>
         </SidebarFooter>
       </Sidebar>
 
@@ -268,4 +268,3 @@ export default function AIPediaPage() {
     </SidebarProvider>
   );
 }
-
