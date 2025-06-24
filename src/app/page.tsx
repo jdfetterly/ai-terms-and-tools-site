@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart } from 'lucide-react';
+import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -29,7 +29,7 @@ import type { Term } from '@/lib/types';
 export default function AIPediaPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<'category' | 'alphabetical'>('alphabetical'); // Default to A-Z
+  const [showInteractiveOnly, setShowInteractiveOnly] = useState(false);
   const [staticHeaderHeight, setStaticHeaderHeight] = useState(0);
   const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
 
@@ -49,7 +49,9 @@ export default function AIPediaPage() {
   const filteredTerms = useMemo(() => {
     let displayTerms = [...allTermsData];
 
-    if (selectedCategory) {
+    if (showInteractiveOnly) {
+      displayTerms = displayTerms.filter(term => term.interactiveTools && term.interactiveTools.length > 0);
+    } else if (selectedCategory) {
       displayTerms = displayTerms.filter(term => term.category === selectedCategory);
     }
 
@@ -61,46 +63,16 @@ export default function AIPediaPage() {
       );
     }
 
-    if (sortBy === 'alphabetical') {
-      displayTerms.sort((a, b) => a.name.localeCompare(b.name));
-    } else { // Sort by category, respecting predefined order (when a specific category is selected)
-      // If selectedCategory is not null, we're already filtered, just sort by name
-      // If selectedCategory is null AND sortBy is 'category' (this case is now less likely to be the primary view)
-      // we sort by the predefined category order, then by name.
-      if (selectedCategory) {
-         displayTerms.sort((a, b) => a.name.localeCompare(b.name));
-      } else {
-        displayTerms.sort((a, b) => {
-          const categoryAIndex = predefinedCategories.indexOf(a.category);
-          const categoryBIndex = predefinedCategories.indexOf(b.category);
-
-          if (categoryAIndex !== categoryBIndex) {
-            return categoryAIndex - categoryBIndex;
-          }
-          return a.name.localeCompare(b.name);
-        });
-      }
-    }
+    displayTerms.sort((a, b) => a.name.localeCompare(b.name));
+    
     return displayTerms;
-  }, [searchTerm, selectedCategory, sortBy]);
+  }, [searchTerm, selectedCategory, showInteractiveOnly]);
 
-  const termsGroupedByCategory = useMemo(() => {
-    // This grouping is only used if no specific category is selected AND sorting by category
-    // Since default is A-Z, this will only be active if a future feature re-enables it,
-    // or if a category is selected (but then filteredTerms is rendered directly).
-    // For consistency, we'll keep the logic, but it's primarily for when a category is chosen now.
-    if (sortBy !== 'category' || selectedCategory !== null) {
-      return null;
-    }
-    const grouped: Record<string, Term[]> = {};
-    predefinedCategories.forEach(category => {
-      const termsInThisCategory = filteredTerms.filter(term => term.category === category);
-      if (termsInThisCategory.length > 0) {
-        grouped[category] = termsInThisCategory;
-      }
-    });
-    return grouped;
-  }, [filteredTerms, sortBy, selectedCategory, predefinedCategories]);
+  const currentViewTitle = showInteractiveOnly 
+    ? 'Interactive Tools' 
+    : selectedCategory 
+    ? selectedCategory 
+    : 'All Terms (A-Z)';
 
 
   return (
@@ -131,14 +103,28 @@ export default function AIPediaPage() {
                 <SidebarMenuButton
                   onClick={() => {
                     setSelectedCategory(null);
-                    setSortBy('alphabetical');
+                    setShowInteractiveOnly(false);
                   }}
-                  isActive={selectedCategory === null && sortBy === 'alphabetical'}
+                  isActive={selectedCategory === null && !showInteractiveOnly}
                   tooltip="View all terms alphabetically"
                   className="w-full"
                 >
                   <ListChecks />
                   All Terms (A-Z)
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  onClick={() => {
+                    setSelectedCategory(null);
+                    setShowInteractiveOnly(true);
+                  }}
+                  isActive={showInteractiveOnly}
+                  tooltip="View terms with interactive tools"
+                  className="w-full"
+                >
+                  <PlaySquare />
+                  Interactive Tools
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -152,7 +138,7 @@ export default function AIPediaPage() {
                   <SidebarMenuButton
                     onClick={() => {
                       setSelectedCategory(category);
-                      setSortBy('category'); // When a category is selected, we sort by category (implicitly, then by name)
+                      setShowInteractiveOnly(false);
                     }}
                     isActive={selectedCategory === category}
                     tooltip={`View terms in ${category}`}
@@ -194,7 +180,7 @@ export default function AIPediaPage() {
         >
           <SidebarTrigger className="md:hidden" />
           <h2 className="text-xl font-semibold font-headline">
-            {selectedCategory ? selectedCategory : (sortBy === 'alphabetical' ? 'All Terms (A-Z)' : 'All Terms (by Category)')}
+            {currentViewTitle}
           </h2>
         </header>
         
@@ -222,34 +208,7 @@ export default function AIPediaPage() {
               </div>
             </div>
 
-            {termsGroupedByCategory && selectedCategory === null && sortBy === 'category' ? ( // This condition for grouped view is now less likely to be primary
-              Object.keys(termsGroupedByCategory).length > 0 ? (
-                predefinedCategories.map(category => {
-                  const termsInThisCategory = termsGroupedByCategory[category];
-                  if (!termsInThisCategory || termsInThisCategory.length === 0) {
-                    return null;
-                  }
-                  return (
-                    <section key={category} className="mb-12">
-                      <h3 className="text-2xl font-semibold font-headline text-primary mb-6 pb-2 border-b border-primary/30">
-                        {category}
-                      </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {termsInThisCategory.map(term => (
-                          <TermCard key={term.id} term={term} />
-                        ))}
-                      </div>
-                    </section>
-                  );
-                })
-              ) : (
-                 <div className="text-center text-muted-foreground py-10">
-                  <Search className="mx-auto h-12 w-12 mb-4" />
-                  <p className="text-lg">No terms found.</p>
-                  <p>Try adjusting your search or category selection.</p>
-                </div>
-              )
-            ) : filteredTerms.length > 0 ? ( // This will be the default rendering path now
+            {filteredTerms.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {filteredTerms.map(term => (
                   <TermCard key={term.id} term={term} />
