@@ -19,7 +19,7 @@
     --border: 210 15% 85%;
     --input: 210 15% 88%;
 
-    --primary: 210 70% 50%; /* Vibrant Blue */
+    --primary: 256 90% 34%; /* Deep Purple */
     --primary-foreground: 210 40% 98%; /* Light color for text on primary */
 
     --secondary: 210 60% 70%; /* Lighter vibrant blue */
@@ -31,7 +31,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --ring: 210 70% 50%; /* Use primary for ring */
+    --ring: 256 90% 34%; /* Use primary for ring */
 
     --radius: 0.5rem;
 
@@ -44,7 +44,7 @@
     /* Sidebar specific colors, can be adjusted or inherit from above */
     --sidebar-background: 210 20% 92%; /* Slightly darker than main background */
     --sidebar-foreground: 210 10% 15%;
-    --sidebar-primary: 210 70% 50%;
+    --sidebar-primary: 256 90% 34%;
     --sidebar-primary-foreground: 210 40% 98%;
     --sidebar-accent: 256 90% 34%; /* Deep Purple */
     --sidebar-accent-foreground: 210 40% 98%;
@@ -69,7 +69,7 @@
     --border: 210 10% 30%;
     --input: 210 10% 30%;
 
-    --primary: 210 70% 50%;
+    --primary: 256 90% 60%; /* Lighter Purple for dark mode */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 60% 40%;
@@ -81,11 +81,11 @@
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --ring: 210 70% 50%;
+    --ring: 256 90% 60%;
 
     --sidebar-background: 210 10% 10%;
     --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 210 70% 50%;
+    --sidebar-primary: 256 90% 60%;
     --sidebar-primary-foreground: 210 40% 98%;
     --sidebar-accent: 256 90% 60%; /* Lighter Purple for dark mode */
     --sidebar-accent-foreground: 210 20% 95%;
