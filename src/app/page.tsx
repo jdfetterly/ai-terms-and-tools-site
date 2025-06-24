@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
@@ -8,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { ListChecks, Search, Sparkles, Puzzle, Lightbulb } from 'lucide-react';
+import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -169,7 +170,11 @@ export default function AIPediaPage() {
             <Lightbulb className="mr-2 h-4 w-4" />
             Request New Term
           </Button>
-          <p className="text-xs text-muted-foreground text-center">© {new Date().getFullYear()} ChatBotLabs.io</p>
+          <p className="text-xs text-muted-foreground text-center flex items-center justify-center space-x-1">
+            <span>Designed & Vibe Coded with</span>
+            <Heart className="h-3 w-3" />
+            <span>by JD</span>
+          </p>
         </SidebarFooter>
       </Sidebar>
 
