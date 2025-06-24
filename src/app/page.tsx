@@ -163,15 +163,15 @@ export default function AIPediaPage() {
               <span>by JD</span>
             </p>
             <div className="flex items-center justify-center space-x-4 text-muted-foreground">
-              <a href="https://x.com/your-profile" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+              <a href="https://x.com/realJDFetterly" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
                 <Twitter className="h-4 w-4" />
                 <span className="sr-only">X Profile</span>
               </a>
-              <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+              <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn Profile</span>
               </a>
-              <a href="https://your-website.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+              <a href="https://www.chatbotlabs.io/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
                 <Globe className="h-4 w-4" />
                 <span className="sr-only">Consulting Website</span>
               </a>
