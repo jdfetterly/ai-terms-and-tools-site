@@ -107,7 +107,7 @@ export default function AIPediaPage() {
     <SidebarProvider defaultOpen>
       <Sidebar>
         <SidebarHeader className="p-4 items-center">
-            <h1 className="text-2xl font-headline font-semibold">ChatBotLabs.io</h1>
+            <h1 className="text-2xl font-orbitron font-semibold text-primary">ChatBotLabs.io</h1>
         </SidebarHeader>
         <Separator />
         <SidebarContent className="p-0">
