@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Generative AI Terms and Interactive Tools',
-  description: 'Key Terms and Interactive Tools to Help You Understand Generative AI',
+  title: 'AI Terms and Interactive Tools',
+  description: 'Key Terms and Interactive Tools to Help You Understand AI',
 };
 
 export default function RootLayout({

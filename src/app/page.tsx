@@ -176,10 +176,10 @@ export default function AIPediaPage() {
       <SidebarInset className="flex flex-col">
         <div ref={staticHeaderRef} className="sticky top-0 z-30 bg-background p-6 border-b">
           <h1 className="text-3xl lg:text-4xl font-bold font-headline mb-2 text-primary">
-            Generative AI Terms and Interactive Tools
+            AI Terms and Interactive Tools
           </h1>
           <p className="text-lg text-foreground/90">
-            Key Terms and Interactive Tools to Help You Understand Generative AI
+            Key Terms and Interactive Tools to Help You Understand AI
           </p>
         </div>
 
