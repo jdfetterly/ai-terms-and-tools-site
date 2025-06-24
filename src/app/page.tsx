@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare } from 'lucide-react';
+import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare, Globe, Linkedin, Twitter } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -151,16 +151,32 @@ export default function AIPediaPage() {
             </SidebarMenu>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter className="p-4 border-t space-y-2">
+        <SidebarFooter className="p-4 border-t space-y-4">
            <Button variant="outline" className="w-full" onClick={() => setIsRequestDialogOpen(true)}>
             <Lightbulb className="mr-2 h-4 w-4" />
             Request New Term
           </Button>
-          <p className="text-xs text-muted-foreground text-center flex items-center justify-center space-x-1">
-            <span>Designed & Vibe Coded with</span>
-            <Heart className="h-3 w-3" />
-            <span>by JD</span>
-          </p>
+          <div className="space-y-2">
+            <p className="text-xs text-muted-foreground text-center flex items-center justify-center space-x-1">
+              <span>Designed & Vibe Coded with</span>
+              <Heart className="h-3 w-3" />
+              <span>by JD</span>
+            </p>
+            <div className="flex items-center justify-center space-x-4 text-muted-foreground">
+              <a href="https://x.com/your-profile" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                <Twitter className="h-4 w-4" />
+                <span className="sr-only">X Profile</span>
+              </a>
+              <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                <Linkedin className="h-4 w-4" />
+                <span className="sr-only">LinkedIn Profile</span>
+              </a>
+              <a href="https://your-website.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                <Globe className="h-4 w-4" />
+                <span className="sr-only">Consulting Website</span>
+              </a>
+            </div>
+          </div>
         </SidebarFooter>
       </Sidebar>
 
