@@ -54,7 +54,7 @@ export default function TermCard({ term }: TermCardProps) {
         <CardHeader className="bg-card-foreground/5">
           <CardTitle className="text-2xl font-headline text-primary">{term.name}</CardTitle>
           <div className="flex items-center justify-between mt-1">
-            <Badge variant="secondary">{term.category}</Badge>
+            <Badge variant="default">{term.category}</Badge>
             {term.interactiveTools && term.interactiveTools.length > 0 && (
               <Tooltip>
                 <TooltipTrigger asChild>
