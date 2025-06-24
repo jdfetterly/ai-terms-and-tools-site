@@ -65,9 +65,9 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
     setIsSubmitting(true);
 
     // IMPORTANT: Replace with your email address
-    const recipientEmail = 'your-email@example.com';
+    const recipientEmail = 'jd@chatbotlabs.io';
 
-    const subject = `New AI Lexicon Term Request: ${termName}`;
+    const subject = `New AI Term Request: ${termName}`;
     const body = `
 A new term has been requested for the AI Lexicon.
 
