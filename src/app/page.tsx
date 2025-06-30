@@ -179,7 +179,7 @@ export default function AIPediaPage() {
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn Profile</span>
               </a>
-              <a href="https://your-blog.ghost.io" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+              <a href="https://the-context-window.ghost.io/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
                 <PenSquare className="h-4 w-4" />
                 <span className="sr-only">Blog</span>
               </a>
