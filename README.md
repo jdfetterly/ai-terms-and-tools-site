@@ -25,9 +25,3 @@ This application serves as a practical example of how to build a modern web appl
 - [Genkit](https://firebase.google.com/docs/genkit)
 
 ## Installation
-
-To get started with this project, follow these steps:
-
-1.  **Clone the repository:**
-
-
