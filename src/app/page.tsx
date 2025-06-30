@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
@@ -9,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare, Globe, Linkedin } from 'lucide-react';
+import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare, Globe, Linkedin, PenSquare } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -179,6 +178,10 @@ export default function AIPediaPage() {
               <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn Profile</span>
+              </a>
+              <a href="https://your-blog.ghost.io" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                <PenSquare className="h-4 w-4" />
+                <span className="sr-only">Blog</span>
               </a>
               <a href="https://www.chatbotlabs.io/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
                 <Globe className="h-4 w-4" />
