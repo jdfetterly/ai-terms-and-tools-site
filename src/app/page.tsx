@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
@@ -8,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare, Globe, Linkedin, Twitter } from 'lucide-react';
+import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare, Globe, Linkedin } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -165,7 +166,14 @@ export default function AIPediaPage() {
             </p>
             <div className="flex items-center justify-center space-x-4 text-muted-foreground">
               <a href="https://x.com/realJDFetterly" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
-                <Twitter className="h-4 w-4" />
+                <svg
+                  className="h-4 w-4"
+                  viewBox="0 0 1200 1227"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6904H306.615L611.412 515.685L658.88 583.579L1076.55 1160.31H913.946L569.165 687.854V687.828Z" />
+                </svg>
                 <span className="sr-only">X Profile</span>
               </a>
               <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
