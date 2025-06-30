@@ -154,7 +154,7 @@ Tool Description: ${interactiveToolDescription || '(not provided)'}
           </ScrollArea>
         </div>
         <DialogFooter className="border-t pt-4">
-          <Button type="button" variant="outline" onClick={() => handleOpenChange(false)} disabled={isSubmitting}>
+          <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
             Cancel
           </Button>
           <Button type="button" onClick={handleFormSubmit} disabled={isSubmitting}>
