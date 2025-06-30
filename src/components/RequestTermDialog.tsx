@@ -15,7 +15,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface RequestTermDialogProps {
   isOpen: boolean;
@@ -52,9 +51,9 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
     setInteractiveToolName('');
     setInteractiveToolUrl('');
     setInteractiveToolDescription('');
-    setIsSubmitting(false); // Ensure submitting state is reset
+    setIsSubmitting(false);
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current); // Crucially, cancel the pending action
+      clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
   };
@@ -108,7 +107,6 @@ Tool Description: ${interactiveToolDescription || '(not provided)'}
 
     const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-    // Give a moment for the UI to update before opening the mail client
     timeoutRef.current = setTimeout(() => {
         window.location.href = mailtoLink;
         setIsSubmitting(false);
@@ -122,16 +120,15 @@ Tool Description: ${interactiveToolDescription || '(not provided)'}
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-[600px] flex flex-col max-h-[90vh]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[600px] flex flex-col max-h-[90vh] p-0">
+        <DialogHeader className="p-6 pb-4">
           <DialogTitle>Request a New Term</DialogTitle>
           <DialogDescription>
             Help expand the AI Lexicon! Fill in the details below. This will open your default email client to send the request.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex-1 min-h-0 relative">
-          <ScrollArea className="absolute inset-0">
-            <div className="space-y-6 p-6">
+        <div className="flex-1 overflow-y-auto">
+            <div className="space-y-6 px-6 pb-6">
               <div className="space-y-2">
                 <Label htmlFor="termName">Term Name <span className="text-destructive">*</span></Label>
                 <Input id="termName" placeholder="e.g., Zero-shot Learning" value={termName} onChange={(e) => setTermName(e.target.value)} />
@@ -165,9 +162,8 @@ Tool Description: ${interactiveToolDescription || '(not provided)'}
                 </div>
               </div>
             </div>
-          </ScrollArea>
         </div>
-        <DialogFooter className="border-t pt-4">
+        <DialogFooter className="border-t p-4 flex-shrink-0">
           <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
             Cancel
           </Button>
