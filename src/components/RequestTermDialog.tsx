@@ -1,7 +1,6 @@
-
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -34,6 +33,16 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
   const [interactiveToolDescription, setInteractiveToolDescription] = useState('');
 
   const { toast } = useToast();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    // Clear timeout if the component unmounts to prevent memory leaks
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const resetForm = () => {
     setTermName('');
@@ -43,6 +52,11 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
     setInteractiveToolName('');
     setInteractiveToolUrl('');
     setInteractiveToolDescription('');
+    setIsSubmitting(false); // Ensure submitting state is reset
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current); // Crucially, cancel the pending action
+      timeoutRef.current = null;
+    }
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -95,7 +109,7 @@ Tool Description: ${interactiveToolDescription || '(not provided)'}
     const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     // Give a moment for the UI to update before opening the mail client
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
         window.location.href = mailtoLink;
         setIsSubmitting(false);
         handleOpenChange(false);
