@@ -43,11 +43,13 @@ An interactive Next.js application that serves as a comprehensive guide to Artif
 
 3. **Set up environment variables**
    
-   Create a `.env.local` file in the root directory:
-   ```bash
-   # Google AI API Key for Genkit
-   GOOGLE_GENAI_API_KEY=your_google_ai_api_key_here
-   ```
+  Create a `.env.local` file in the root directory:
+  ```bash
+  # Google AI API Key for Genkit
+  GOOGLE_GENAI_API_KEY=your_google_ai_api_key_here
+  # Email address to receive term requests
+  NEXT_PUBLIC_REQUEST_TERM_EMAIL=you@example.com
+  ```
 
 4. **Run the development server**
    ```bash

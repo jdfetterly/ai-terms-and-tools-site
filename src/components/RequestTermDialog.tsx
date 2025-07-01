@@ -77,8 +77,16 @@ export default function RequestTermDialog({ isOpen, onOpenChange }: RequestTermD
 
     setIsSubmitting(true);
 
-    // IMPORTANT: Replace with your email address
-    const recipientEmail = 'jd@chatbotlabs.io';
+    const recipientEmail = process.env.NEXT_PUBLIC_REQUEST_TERM_EMAIL;
+    if (!recipientEmail) {
+      toast({
+        title: 'Error',
+        description: 'REQUEST_TERM_EMAIL is not configured.',
+        variant: 'destructive',
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     const subject = `New AI Term Request: ${termName}`;
     const body = `

@@ -53,7 +53,6 @@
   }
 
   .dark {
-    /* TODO: Define a dark theme if necessary, for now, using light theme values slightly adjusted */
     --background: 210 10% 15%;
     --foreground: 210 20% 95%;
 
