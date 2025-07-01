@@ -65,6 +65,8 @@ An interactive Next.js application that serves as a comprehensive guide to Artif
 - `npm run typecheck` - Run TypeScript type checking
 - `npm run genkit:dev` - Start Genkit development server
 - `npm run genkit:watch` - Start Genkit with watch mode
+- `npm test` - Run unit tests with Jest
+- `npm run test:watch` - Run Jest in watch mode
 
 ## Adding and Updating Terms
 
