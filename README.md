@@ -329,3 +329,4 @@ When setting up Cloudflare Pages, use these build settings:
 ---
 
 *Built with ❤️ by JD | [ChatBotLabs.io](https://chatbotlabs.io)*
+# Trigger Cloudflare rebuild
