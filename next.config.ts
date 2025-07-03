@@ -18,6 +18,25 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  ...(process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true' && {
+    output: 'export',
+    trailingSlash: true,
+    images: {
+      unoptimized: true,
+    },
+  }),
+  webpack: (config, { isServer }) => {
+    if (process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true') {
+      // Exclude server actions and AI-related modules for static export
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@/app/actions': false,
+        '@/ai/flows/generate-ai-example': false,
+        '@/ai/genkit': false,
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

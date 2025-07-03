@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import MarkdownRenderer from './MarkdownRenderer';
 import InteractiveToolModal from './InteractiveToolModal';
-import { generateExampleAction } from '@/app/actions';
 import React, { useState } from 'react';
 import { Loader2, Wand2, PlaySquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -35,18 +34,31 @@ export default function TermCard({ term }: TermCardProps) {
   const { toast } = useToast();
 
   const handleGenerateExample = async () => {
+    if (isStaticExport) return;
+    
     setIsLoadingExample(true);
     setGeneratedExample(null);
-    const result = await generateExampleAction(term.name);
-    if ('error' in result) {
+    
+    try {
+      const { generateExampleAction } = await import('@/app/actions');
+      const result = await generateExampleAction(term.name);
+      if ('error' in result) {
+        toast({
+          title: "Error",
+          description: result.error,
+          variant: "destructive",
+        });
+      } else {
+        setGeneratedExample(result.example);
+      }
+    } catch (error) {
       toast({
         title: "Error",
-        description: result.error,
+        description: "Failed to generate example",
         variant: "destructive",
       });
-    } else {
-      setGeneratedExample(result.example);
     }
+    
     setIsLoadingExample(false);
   };
 

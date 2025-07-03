@@ -307,6 +307,25 @@ NEXT_PUBLIC_STATIC_EXPORT=true next build && next export
 
 - For dynamic/serverless deployments, you can omit this variable or set it to `false`.
 
+### Building for Static Deployment
+
+To build for static deployment (like Cloudflare Pages), use:
+
+```sh
+npm run build:static
+```
+
+This command temporarily moves server action files during the build process to ensure compatibility with static export.
+
+### Cloudflare Pages Setup
+
+When setting up Cloudflare Pages, use these build settings:
+
+- **Framework preset:** Next.js (Static HTML Export)
+- **Build command:** `npm run build:static`
+- **Output directory:** `out`
+- **Environment variable:** `NEXT_PUBLIC_STATIC_EXPORT=true`
+
 ---
 
 *Built with ❤️ by JD | [ChatBotLabs.io](https://chatbotlabs.io)*
