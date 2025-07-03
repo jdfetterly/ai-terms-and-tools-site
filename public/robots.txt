@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.explaingenai.com/sitemap.xml
+
+# Additional crawling guidelines
+Crawl-delay: 1 
