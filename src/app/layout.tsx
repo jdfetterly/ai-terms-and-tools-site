@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'AI Terms and Interactive Tools',
+  title: 'ExplainGenAI – Learn Generative AI Terms',
   description: 'Your guide to the most important terms in Generative AI—clear definitions, real examples, and interactive tools.',
   openGraph: {
     title: 'ExplainGenAI – Your Guide to Generative AI',

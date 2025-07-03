@@ -153,10 +153,25 @@ export default function AIPediaPage() {
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className="p-4 border-t space-y-4">
-           <Button variant="outline" className="w-full" onClick={() => setIsRequestDialogOpen(true)}>
-            <Lightbulb className="mr-2 h-4 w-4" />
-            Request New Term
-          </Button>
+          <div className="flex flex-col space-y-2">
+            <Button variant="outline" size="sm" className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground" onClick={() => setIsRequestDialogOpen(true)}>
+              Request New Term
+            </Button>
+            <nav className="site-footer-nav">
+              <div className="flex flex-col space-y-2">
+                <Button asChild variant="outline" size="sm" className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground">
+                  <a href="https://blog.contextwindow.ai" target="_blank" rel="noopener noreferrer">
+                    The Context Window
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="sm" className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground">
+                  <a href="https://www.chatbotlabs.io" target="_blank" rel="noopener noreferrer">
+                    ChatBot Labs
+                  </a>
+                </Button>
+              </div>
+            </nav>
+          </div>
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground text-center flex items-center justify-center space-x-1">
               <span>Designed & Vibe Coded with</span>
@@ -195,10 +210,10 @@ export default function AIPediaPage() {
       <SidebarInset className="flex flex-col">
         <div ref={staticHeaderRef} className="sticky top-0 z-30 bg-background p-6 border-b">
           <h1 className="text-3xl lg:text-4xl font-bold font-headline mb-2 text-primary">
-            AI Terms and Interactive Tools
+            Explain Generative AI
           </h1>
           <p className="text-lg text-foreground/90">
-            Key Terms and Interactive Tools to Help You Understand AI
+            Plain-English Explanations + Interactive Tools for Generative AI Terms
           </p>
         </div>
 
