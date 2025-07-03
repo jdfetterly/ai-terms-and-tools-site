@@ -70,6 +70,20 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        '3xl': '1.5rem',
+        '4xl': '2rem',
+      },
+      boxShadow: {
+        'apple': '0 4px 16px 0 rgba(0, 0, 0, 0.08)',
+        'apple-lg': '0 8px 32px 0 rgba(0, 0, 0, 0.12)',
+        'apple-xl': '0 16px 64px 0 rgba(0, 0, 0, 0.16)',
+      },
+      backdropBlur: {
+        'apple': '20px',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
       },
       keyframes: {
         'accordion-down': {
@@ -88,10 +102,32 @@ export default {
             height: '0',
           },
         },
+        'slide-in': {
+          from: {
+            transform: 'translateX(-100%)',
+            opacity: '0',
+          },
+          to: {
+            transform: 'translateX(0)',
+            opacity: '1',
+          },
+        },
+        'scale-in': {
+          from: {
+            transform: 'scale(0.95)',
+            opacity: '0',
+          },
+          to: {
+            transform: 'scale(1)',
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'slide-in': 'slide-in 0.3s ease-out',
+        'scale-in': 'scale-in 0.2s ease-out',
       },
     },
   },

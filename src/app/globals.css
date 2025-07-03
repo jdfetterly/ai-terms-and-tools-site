@@ -4,100 +4,263 @@
 
 @layer base {
   :root {
-    --background: 210 20% 95%; /* Light Blue */
-    --foreground: 210 10% 20%; /* Dark Gray/Blue */
-
-    --muted: 210 20% 88%;
-    --muted-foreground: 210 10% 40%;
-
-    --popover: 210 20% 98%;
-    --popover-foreground: 210 10% 20%;
-
-    --card: 210 20% 98%; /* Slightly lighter than background for cards */
-    --card-foreground: 210 10% 20%;
-
-    --border: 210 15% 85%;
-    --input: 210 15% 88%;
-
-    --primary: 267 80% 24%; /* Deep Purple #380C6E */
-    --primary-foreground: 267 20% 98%; /* Light color for text on primary */
-
-    --secondary: 267 40% 50%; /* Lighter Purple */
-    --secondary-foreground: 210 10% 20%;
-
-    --accent: 267 80% 24%; /* Using Primary for Accent */
-    --accent-foreground: 267 20% 98%; /* Light color for text on accent */
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --ring: 267 80% 24%; /* Use primary for ring */
-
-    --radius: 0.5rem;
+    --background: 255 255 255; /* Pure white */
+    --foreground: 17 24 39; /* Dark gray/black for text */
+    --card: 255 255 255; /* White cards */
+    --card-foreground: 17 24 39; /* Dark text on cards */
+    --popover: 255 255 255;
+    --popover-foreground: 17 24 39;
+    --primary: 147 51 234; /* Purple */
+    --primary-foreground: 255 255 255;
+    --secondary: 243 244 246; /* Light gray */
+    --secondary-foreground: 17 24 39;
+    --muted: 249 250 251; /* Very light gray */
+    --muted-foreground: 107 114 128; /* Medium gray */
+    --accent: 243 244 246;
+    --accent-foreground: 17 24 39;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
+    --border: 229 231 235; /* Light gray borders */
+    --input: 229 231 235;
+    --ring: 147 51 234;
+    --radius: 0.75rem;
 
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
+    --chart-4: 220 13% 91%; /* Changed from yellow to neutral gray */
     --chart-5: 27 87% 67%;
 
-    /* Sidebar specific colors, can be adjusted or inherit from above */
-    --sidebar-background: 210 20% 92%; /* Slightly darker than main background */
-    --sidebar-foreground: 210 10% 15%;
+    /* Sidebar with subtle differentiation */
+    --sidebar-background: 255 255 255; /* Pure white instead of off-white */
+    --sidebar-foreground: 28 28 30;
     --sidebar-primary: 267 80% 24%;
-    --sidebar-primary-foreground: 267 20% 98%;
-    --sidebar-accent: 267 80% 24%;
-    --sidebar-accent-foreground: 267 20% 98%;
-    --sidebar-border: 210 15% 80%;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 0 122 255;
+    --sidebar-accent-foreground: 255 255 255;
+    --sidebar-border: 229 229 234;
     --sidebar-ring: 267 80% 24%;
   }
 
   .dark {
-    /* TODO: Define a dark theme if necessary, for now, using light theme values slightly adjusted */
-    --background: 210 10% 15%;
-    --foreground: 210 20% 95%;
+    /* Apple-inspired dark mode */
+    --background: 0 0 0; /* Pure black */
+    --foreground: 255 255 255;
 
-    --muted: 210 10% 25%;
-    --muted-foreground: 210 20% 70%;
+    --muted: 28 28 30;
+    --muted-foreground: 174 174 178;
 
-    --popover: 210 10% 12%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 28 28 30;
+    --popover-foreground: 255 255 255;
 
-    --card: 210 10% 12%;
-    --card-foreground: 210 20% 95%;
+    --card: 28 28 30;
+    --card-foreground: 255 255 255;
 
-    --border: 210 10% 30%;
-    --input: 210 10% 30%;
+    --border: 58 58 60;
+    --input: 58 58 60;
 
-    --primary: 267 70% 60%; /* Lighter Purple for dark mode */
-    --primary-foreground: 267 20% 98%;
+    --primary: 267 70% 60%; /* Lighter purple for dark mode */
+    --primary-foreground: 255 255 255;
 
-    --secondary: 267 50% 40%;
-    --secondary-foreground: 210 20% 95%;
+    --secondary: 99 99 102;
+    --secondary-foreground: 255 255 255;
 
-    --accent: 267 70% 60%; /* Lighter Purple for dark mode */
-    --accent-foreground: 267 20% 95%;
+    --accent: 10 132 255; /* Apple blue for dark mode */
+    --accent-foreground: 255 255 255;
 
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 255 69 58;
+    --destructive-foreground: 255 255 255;
 
     --ring: 267 70% 60%;
 
-    --sidebar-background: 210 10% 10%;
-    --sidebar-foreground: 210 20% 90%;
+    --sidebar-background: 0 0 0;
+    --sidebar-foreground: 255 255 255;
     --sidebar-primary: 267 70% 60%;
-    --sidebar-primary-foreground: 267 20% 98%;
-    --sidebar-accent: 267 70% 60%;
-    --sidebar-accent-foreground: 267 20% 95%;
-    --sidebar-border: 210 10% 25%;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 10 132 255;
+    --sidebar-accent-foreground: 255 255 255;
+    --sidebar-border: 58 58 60;
     --sidebar-ring: 267 70% 60%;
   }
   
   * {
     @apply border-border;
   }
+  
   body {
-    @apply bg-background text-foreground;
-    /* font-family is handled by tailwind config and className on body */
+    @apply bg-white text-gray-900 font-sans;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    /* Enhanced typography for Apple feel */
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  /* Enhanced typography hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-gray-900 font-semibold;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  h2 {
+    font-size: 2rem;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* Better prose styling */
+  .prose {
+    line-height: 1.7;
+  }
+
+  .prose p {
+    margin-bottom: 1.25rem;
+  }
+
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Enhanced focus states */
+  button:focus-visible,
+  input:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Ensure all text is dark and readable */
+  p, span, div {
+    @apply text-gray-800;
+  }
+  
+  /* Card styling with proper shadows and contrast */
+  .card {
+    @apply bg-white border border-gray-200 shadow-sm;
+  }
+  
+  /* Button styling */
+  .btn-primary {
+    @apply bg-purple-600 text-white border-purple-600 shadow-sm;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 border-gray-200 shadow-sm;
+  }
+
+  /* Remove yellow from form elements */
+  input, textarea, select, button {
+    border-color: rgb(229 231 235) !important;
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    border-color: rgb(147 51 234) !important;
+    box-shadow: 0 0 0 2px rgb(147 51 234 / 0.2) !important;
+  }
+  
+  /* Remove yellow from any remaining elements */
+  .focus\:ring-yellow-400:focus,
+  .focus\:border-yellow-400:focus,
+  .hover\:bg-yellow-50:hover,
+  .bg-yellow-100,
+  .border-yellow-400 {
+    background-color: rgb(243 244 246) !important;
+    border-color: rgb(147 51 234) !important;
+  }
+
+  /* Sidebar scroll containment */
+  [data-sidebar="sidebar"] {
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent scroll propagation from sidebar content */
+  [data-sidebar="content"] {
+    overscroll-behavior: contain;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbars while maintaining functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Apple-style backdrop blur */
+  .backdrop-blur-apple {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Perfect spacing utilities */
+  .space-y-apple > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1.5rem;
+  }
+
+  /* Text rendering optimizations */
+  .text-crisp {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Force pure white backgrounds for all potentially problematic classes */
+  .bg-muted,
+  .bg-muted\/50,
+  .bg-muted\/20,
+  .bg-sidebar,
+  .bg-background,
+  button,
+  .button,
+  [role="button"] {
+    background-color: rgb(255, 255, 255) !important;
+  }
+
+  /* Ensure chart colors don't interfere */
+  .bg-chart-4 {
+    background-color: rgb(220, 220, 220) !important;
+  }
+
+  /* Force override any yellow outlines/highlights with purple */
+  *:focus {
+    outline-color: #9333ea !important;
+    box-shadow: 0 0 0 2px #9333ea !important;
+  }
+  *:focus-visible {
+    outline-color: #9333ea !important;
+    box-shadow: 0 0 0 2px #9333ea !important;
+  }
+  .focus\:ring-yellow-400:focus,
+  .focus\:border-yellow-400:focus,
+  .hover\:bg-yellow-50:hover,
+  .bg-yellow-100,
+  .border-yellow-400 {
+    background-color: #f3e8ff !important; /* light purple */
+    border-color: #9333ea !important;
+    outline-color: #9333ea !important;
+    box-shadow: 0 0 0 2px #9333ea !important;
+  }
+  /* Utility for brand purple */
+  .brand-purple {
+    color: #9333ea !important;
   }
 }

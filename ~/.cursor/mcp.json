@@ -1,0 +1,78 @@
+{
+  "mcpServers": {
+    "@21st-dev/magic": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@21st-dev/magic@latest",
+        "API_KEY=\"7e3ad026e0e8f747380576adc6b174482628418d122cd8a65a82945d14d6a90b\""
+      ]
+    },
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--access-token",
+        "sbp_84271e5a2060eeb35f7c62ab1f38545533bfd674"
+      ]
+    },
+    "veyrax": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@veyrax/mcp-server@latest",
+        "--host",
+        "mcp.veyrax.com",
+        "--port",
+        "443",
+        "--protocol",
+        "https",
+        "--api-key",
+        "xxx"
+      ]
+    },
+    "browser-tools-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agentdeskai/browser-tools-mcp@latest"
+      ]
+    },
+    "cloudflare": {
+      "url": "https://my-mcp-server.jdfetterly.workers.dev/sse"
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "Notion": {
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "notes": {
+      "command": "node",
+      "args": [
+        "/Users/jdfetterly/notes-mcp/dist/index.js"
+      ]
+    }
+  },
+  "server": {
+    "name": "VeyraX MCP Server",
+    "host": "mcp.veyrax.com",
+    "port": 443,
+    "protocol": "https",
+    "authentication": {
+      "type": "api_key",
+      "api_key": "vrx-26fc3bb47f6b96e971e857494f3ad8d974f6ccb6"
+    },
+    "endpoints": {
+      "auth": "/auth",
+      "data": "/data",
+      "status": "/status"
+    },
+    "timeout": 30
+  }
+} 
