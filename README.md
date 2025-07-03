@@ -292,6 +292,21 @@ For questions, suggestions, or support:
 - LinkedIn: [@jdfetterly](https://linkedin.com/in/jdfetterly)
 - Blog: [The Context Window](https://the-context-window.ghost.io/)
 
+## Static Export Limitations
+
+If you deploy this site as a static build (using `next export`), the "Generate Example with AI" feature will be disabled. This is because static exports do not support server actions or dynamic server-side logic.
+
+### How to Enable AI Example Generation
+
+- To enable AI example generation, deploy the site to a platform that supports serverless functions (such as Vercel, Netlify, or similar) and do not use `next export`.
+- The UI will automatically detect static export mode using the `NEXT_PUBLIC_STATIC_EXPORT` environment variable. Set this variable to `true` at build time for static exports:
+
+```sh
+NEXT_PUBLIC_STATIC_EXPORT=true next build && next export
+```
+
+- For dynamic/serverless deployments, you can omit this variable or set it to `false`.
+
 ---
 
 *Built with ❤️ by JD | [ChatBotLabs.io](https://chatbotlabs.io)*

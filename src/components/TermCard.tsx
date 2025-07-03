@@ -26,6 +26,8 @@ interface TermCardProps {
   term: Term;
 }
 
+const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true';
+
 export default function TermCard({ term }: TermCardProps) {
   const [generatedExample, setGeneratedExample] = useState<string | null>(null);
   const [isLoadingExample, setIsLoadingExample] = useState(false);
@@ -81,7 +83,11 @@ export default function TermCard({ term }: TermCardProps) {
                   <MarkdownRenderer content={term.content.example} />
                 ) : (
                   <>
-                    {isLoadingExample ? (
+                    {isStaticExport ? (
+                      <div className="text-muted-foreground mt-2">
+                        <span>AI example generation is disabled in static builds.</span>
+                      </div>
+                    ) : isLoadingExample ? (
                       <div className="flex items-center space-x-2 text-muted-foreground mt-2">
                         <Loader2 className="h-5 w-5 animate-spin" />
                         <span>Generating example...</span>
