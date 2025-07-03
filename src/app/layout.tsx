@@ -4,7 +4,27 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: 'AI Terms and Interactive Tools',
-  description: 'Key Terms and Interactive Tools to Help You Understand AI',
+  description: 'Your guide to the most important terms in Generative AI—clear definitions, real examples, and interactive tools.',
+  openGraph: {
+    title: 'ExplainGenAI – Your Guide to Generative AI',
+    description: 'A beginner-friendly glossary of essential Generative AI terms and tools.',
+    url: 'https://www.explaingenai.com',
+    type: 'website',
+    images: [
+      {
+        url: 'https://www.explaingenai.com/explaingenai-og-image-final.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'ExplainGenAI - Your Guide to Generative AI',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ExplainGenAI – Your Guide to Generative AI',
+    description: 'Understand GenAI terms like LLM, RAG, Diffusion, and more.',
+    images: ['https://www.explaingenai.com/explaingenai-og-image-final.jpg'],
+  },
 };
 
 export default function RootLayout({
