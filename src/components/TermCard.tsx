@@ -85,7 +85,7 @@ export default function TermCard({ term }: TermCardProps) {
     <>
       <Card 
         id={term.id} 
-        className="mb-4 shadow-sm border overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer h-full"
+        className="mb-4 shadow-sm border flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer h-full"
         onClick={handleCardClick}
       >
         <CardHeader className="bg-card-foreground/5 pb-3 flex-shrink-0">
@@ -97,7 +97,7 @@ export default function TermCard({ term }: TermCardProps) {
                 <TooltipTrigger asChild>
                   <div>{getCardIcon()}</div>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent side="left" align="center" sideOffset={8}>
                   <p>{getTooltipText()}</p>
                 </TooltipContent>
               </Tooltip>
