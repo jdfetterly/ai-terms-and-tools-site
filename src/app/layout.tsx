@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Generative AI Explained',
-    description: 'Simple definitions and interactive tools to learn foundational GenAI concepts.',
+    description: 'A beginner-friendly glossary and toolkit to learn core GenAI terms with interactive examples and simple explanations.',
     url: 'https://www.generativeaiexplained.com',
     type: 'website',
     images: [
       {
-        url: 'https://www.generativeaiexplained.com/og-image.png',
+        url: '/gen_ai_explained_og_standard.png',
         width: 1200,
         height: 630,
         alt: 'Generative AI Explained',
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Generative AI Explained',
-    description: 'Simple definitions and interactive tools to learn foundational GenAI concepts.',
-    images: ['https://www.generativeaiexplained.com/og-image.png'],
+    description: 'A beginner-friendly glossary and toolkit to learn core GenAI terms with interactive examples and simple explanations.',
+    images: ['/gen_ai_explained_twitter_summary.png'],
   },
 };
 
@@ -54,6 +54,46 @@ export default function RootLayout({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-Y9KJTMZBX8');
+            `,
+          }}
+        />
+        
+        {/* GA4 Custom Event Tracking */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              function trackViewTerm(termName) {
+                gtag('event', 'view_term', {
+                  event_category: 'glossary',
+                  event_label: termName,
+                });
+              }
+
+              function trackToolLaunch(toolName) {
+                gtag('event', 'launch_tool', {
+                  event_category: 'interactive_tools',
+                  event_label: toolName,
+                });
+              }
+
+              function trackOutboundClick(url) {
+                gtag('event', 'outbound_click', {
+                  event_category: 'navigation',
+                  event_label: url,
+                });
+              }
+
+              // Auto-track all outbound links
+              document.addEventListener('DOMContentLoaded', function () {
+                const links = document.querySelectorAll('a[href^="http"]');
+                links.forEach(link => {
+                  const href = link.getAttribute('href');
+                  const isExternal = !href.includes(location.hostname);
+                  if (isExternal) {
+                    link.addEventListener('click', () => trackOutboundClick(href));
+                  }
+                });
+              });
             `,
           }}
         />

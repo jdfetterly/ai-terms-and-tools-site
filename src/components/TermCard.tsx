@@ -62,9 +62,23 @@ export default function TermCard({ term }: TermCardProps) {
     setIsLoadingExample(false);
   };
 
+  const handleCardClick = () => {
+    // Convert term name to lowercase hyphen-separated format for GA4
+    const termLabel = term.name.toLowerCase().replace(/\s+/g, '-');
+    
+    // Call GA4 tracking function (declared globally in layout.tsx)
+    if (typeof window !== 'undefined' && (window as any).trackViewTerm) {
+      (window as any).trackViewTerm(termLabel);
+    }
+  };
+
   return (
     <>
-      <Card id={term.id} className="mb-4 shadow-sm border overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out">
+      <Card 
+        id={term.id} 
+        className="mb-4 shadow-sm border overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer"
+        onClick={handleCardClick}
+      >
         <CardHeader className="bg-card-foreground/5 pb-3">
           <CardTitle className="text-xl font-headline text-primary">{term.name}</CardTitle>
           <div className="flex items-center justify-between mt-1">
@@ -156,7 +170,14 @@ export default function TermCard({ term }: TermCardProps) {
                         key={tool.url}
                         variant="outline"
                         size="sm"
-                        onClick={() => setSelectedTool(tool)}
+                        onClick={() => {
+                          // Track tool launch
+                          const toolLabel = tool.name.toLowerCase().replace(/\s+/g, '-');
+                          if (typeof window !== 'undefined' && (window as any).trackToolLaunch) {
+                            (window as any).trackToolLaunch(toolLabel);
+                          }
+                          setSelectedTool(tool);
+                        }}
                         className="w-full justify-start text-xs"
                       >
                         <PlaySquare className="mr-2 h-3 w-3" />

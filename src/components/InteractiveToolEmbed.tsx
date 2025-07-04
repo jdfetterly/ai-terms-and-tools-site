@@ -1,4 +1,3 @@
-
 import type { InteractiveTool } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -27,6 +26,13 @@ export default function InteractiveToolEmbed({ tool }: InteractiveToolEmbedProps
             target="_blank" 
             rel="noopener noreferrer" 
             className="text-primary hover:underline font-medium"
+            onClick={() => {
+              // Track tool launch in new tab
+              const toolLabel = tool.name.toLowerCase().replace(/\s+/g, '-');
+              if (typeof window !== 'undefined' && (window as any).trackToolLaunch) {
+                (window as any).trackToolLaunch(`${toolLabel}-external-link`);
+              }
+            }}
           >
             Open {tool.name} in a new tab
           </a>

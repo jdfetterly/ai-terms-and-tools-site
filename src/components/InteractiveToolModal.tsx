@@ -1,4 +1,3 @@
-
 'use client';
 
 import type { InteractiveTool } from '@/lib/types';
@@ -43,7 +42,18 @@ export default function InteractiveToolModal({
         </div>
         <div className="p-4 border-t flex justify-end">
             <Button asChild variant="link">
-                <a href={tool.url} target="_blank" rel="noopener noreferrer">
+                <a 
+                  href={tool.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    // Track tool launch in new tab
+                    const toolLabel = tool.name.toLowerCase().replace(/\s+/g, '-');
+                    if (typeof window !== 'undefined' && (window as any).trackToolLaunch) {
+                      (window as any).trackToolLaunch(`${toolLabel}-new-tab`);
+                    }
+                  }}
+                >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     Open in new tab
                 </a>
