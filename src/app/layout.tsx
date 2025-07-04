@@ -3,27 +3,31 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'ExplainGenAI – Learn Generative AI Terms',
-  description: 'Your guide to the most important terms in Generative AI—clear definitions, real examples, and interactive tools.',
+  title: 'Generative AI Explained',
+  description: 'A beginner-friendly glossary and toolkit to learn core GenAI terms with interactive examples and simple explanations.',
+  metadataBase: new URL('https://www.generativeaiexplained.com'),
+  alternates: {
+    canonical: 'https://www.generativeaiexplained.com',
+  },
   openGraph: {
-    title: 'ExplainGenAI – Your Guide to Generative AI',
-    description: 'A beginner-friendly glossary of essential Generative AI terms and tools.',
-    url: 'https://www.explaingenai.com',
+    title: 'Generative AI Explained',
+    description: 'Simple definitions and interactive tools to learn foundational GenAI concepts.',
+    url: 'https://www.generativeaiexplained.com',
     type: 'website',
     images: [
       {
-        url: 'https://www.explaingenai.com/explaingenai-og-image-final.jpg',
+        url: 'https://www.generativeaiexplained.com/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'ExplainGenAI - Your Guide to Generative AI',
+        alt: 'Generative AI Explained',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ExplainGenAI – Your Guide to Generative AI',
-    description: 'Understand GenAI terms like LLM, RAG, Diffusion, and more.',
-    images: ['https://www.explaingenai.com/explaingenai-og-image-final.jpg'],
+    title: 'Generative AI Explained',
+    description: 'Simple definitions and interactive tools to learn foundational GenAI concepts.',
+    images: ['https://www.generativeaiexplained.com/og-image.png'],
   },
 };
 

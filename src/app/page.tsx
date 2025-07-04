@@ -77,12 +77,6 @@ export default function AIPediaPage() {
   return (
     <SidebarProvider defaultOpen>
       <Sidebar>
-        <SidebarHeader className="p-4 items-center">
-            <a href="https://www.chatbotlabs.io/" target="_blank" rel="noopener noreferrer" className="text-2xl font-orbitron font-semibold text-primary hover:text-primary/90 transition-colors">
-              ChatBotLabs.io
-            </a>
-        </SidebarHeader>
-        <Separator />
         <SidebarContent className="p-0">
           <div className="p-4">
             <div className="relative">
@@ -185,7 +179,7 @@ export default function AIPediaPage() {
               </a>
             </div>
             <p className="text-[10px] text-muted-foreground text-center flex items-center justify-center space-x-1">
-              <span>Designed & Vibe Coded with</span>
+              <span>Designed & (mostly) Vibe Coded with</span>
               <Heart className="h-2.5 w-2.5" />
             </p>
           </div>
@@ -193,51 +187,57 @@ export default function AIPediaPage() {
       </Sidebar>
 
       <SidebarInset className="flex flex-col">
-        <div ref={staticHeaderRef} className="sticky top-0 z-30 bg-background p-6 border-b">
-          <h1 className="text-3xl lg:text-4xl font-bold font-headline mb-2 text-primary">
-            Generative AI Explained
-          </h1>
-          <p className="text-lg text-foreground/90">
-            Plain-English Explanations + Interactive Tools for Generative AI Terms
-          </p>
+        <div ref={staticHeaderRef} className="sticky top-0 z-30 bg-background px-6 py-4 lg:px-8 lg:py-6 border-b">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold font-headline mb-1 lg:mb-2 text-primary">
+              Generative AI Explained
+            </h1>
+            <p className="text-base lg:text-lg text-foreground/90">
+              Plain-English Explanations + Interactive Tools for Generative AI Terms
+            </p>
+          </div>
         </div>
 
         <header
-          className="sticky z-20 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6"
+          className="sticky z-20 flex h-14 lg:h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6 lg:px-8"
           style={{ top: staticHeaderHeight ? `${staticHeaderHeight}px` : '0px' }}
         >
-          <SidebarTrigger className="md:hidden" />
-          <h2 className="text-xl font-semibold font-headline">
-            {currentViewTitle}
-          </h2>
+          <div className="max-w-7xl mx-auto w-full flex items-center gap-4">
+            <SidebarTrigger className="md:hidden" />
+            <h2 className="text-lg lg:text-xl font-semibold font-headline">
+              {currentViewTitle}
+            </h2>
+          </div>
         </header>
         
         <ScrollArea className="flex-1">
-          <div className="p-6">
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-4 p-4 bg-card rounded-lg shadow">
-                <Sparkles className="h-8 w-8 text-accent shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-card-foreground mb-1">Your Guide to GenAI</h3>
-                  <p className="text-sm text-muted-foreground">
-                    A plain-English guide for navigating Generative AI. Learn to speak the language of Artificial Intelligence.
-                  </p>
+          <div className="p-6 max-w-7xl mx-auto">
+            {selectedCategory === null && !showInteractiveOnly && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+                <div className="flex items-start gap-3 p-4 bg-card rounded-lg shadow-sm border">
+                  <Sparkles className="h-6 w-6 text-accent shrink-0 mt-0.5" />
+                  <div>
+                    <h3 className="font-medium text-card-foreground mb-1">Your Guide to GenAI</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      A plain-English guide for navigating Generative AI. Learn to speak the language of Artificial Intelligence.
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-start gap-4 p-4 bg-card rounded-lg shadow">
-                <Puzzle className="h-8 w-8 text-accent shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-card-foreground mb-1">Explore & Understand</h3>
-                  <p className="text-sm text-muted-foreground">
-                    For some of the terms below, I’ve either built or found interactive tools to help you grasp the concepts.
-                  </p>
+                <div className="flex items-start gap-3 p-4 bg-card rounded-lg shadow-sm border">
+                  <Puzzle className="h-6 w-6 text-accent shrink-0 mt-0.5" />
+                  <div>
+                    <h3 className="font-medium text-card-foreground mb-1">Explore & Understand</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      For some of the terms below, I've either built or found interactive tools to help you grasp the concepts.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {filteredTerms.length > 0 ? (
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6">
                 {filteredTerms.map(term => (
                   <TermCard key={term.id} term={term} />
                 ))}
