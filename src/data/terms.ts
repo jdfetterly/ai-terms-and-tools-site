@@ -90,6 +90,17 @@ export const terms: Term[] = [
       whyItMatters: 'Agents represent a significant advancement towards more independent and goal-oriented AI applications, moving beyond simple response generation to autonomous task execution and problem-solving.',
     },
   },
+  {
+    id: generateId('Latent Space'),
+    name: 'Latent Space',
+    category: 'Foundational Concepts',
+    content: {
+      simpleDefinition: 'A high-dimensional space where complex data (like images, text, or audio) is encoded as numerical vectors capturing its essential features.',
+      analogy: 'Imagine a massive spice rack where every blend of flavors (data) has its own spot—nearby spices taste similar, distant ones very different.',
+      example: 'Word embeddings map "king" and "queen" to nearby points in latent space, reflecting their semantic similarity.',
+      whyItMatters: 'Enables machines to compare, interpolate, and generate new data by navigating this continuous representation—crucial for everything from image synthesis to semantic search.',
+    },
+  },
 
   // Interaction & Refinement
   {
@@ -228,16 +239,34 @@ export const terms: Term[] = [
       whyItMatters: 'A critical challenge requiring fact-checking of AI outputs. Highlights the need for human oversight and validation in Data Governance and emphasizes that AI outputs should not be blindly trusted, especially for critical information.',
     },
   },
+
   {
-    id: generateId('Bias'),
-    name: 'Bias',
+    id: generateId('Instruction Tuning'),
+    name: 'Instruction Tuning',
     category: 'Interaction & Refinement',
     content: {
-      simpleDefinition: 'Unfair, inaccurate, or discriminatory AI outputs resulting from skewed information in its Training Data.',
-      analogy: 'A student assuming all doctors are male if only shown male doctors.',
-      example: 'An AI image generator consistently depicting certain professions as only one gender or ethnicity.',
-      elaboration: 'Bias in AI can stem from various sources: unrepresentative Training Data, biased human labeling during Reinforcement Learning from Human Feedback (RLHF), or even the design of the algorithms themselves. Mitigating bias involves careful data curation, diverse human feedback, and algorithmic fairness techniques, but it remains a complex and ongoing challenge. Unaddressed bias can lead to unfair outcomes, perpetuate stereotypes, and erode trust in AI systems.',
-      whyItMatters: 'Addressing Bias is crucial for ethical AI development and deployment, especially in applications impacting people or business decisions. A key Data Governance concern, as it directly impacts fairness, accountability, and transparency in AI systems.',
+      simpleDefinition: 'The process of fine-tuning a pre-trained model on paired examples of instructions and ideal responses to make it better at following user commands.',
+      analogy: 'Like a coach drilling an athlete on specific plays, ensuring they respond perfectly when the game clock starts.',
+      example: 'InstructGPT was tuned on thousands of "Write X in style Y" examples so it learns to reliably obey diverse prompts.',
+      whyItMatters: 'Significantly improves usability and safety by aligning model outputs with user intent and reducing undesirable behaviors.',
+    },
+    interactiveTools: [
+      {
+        name: 'Llama 3.2 3B Instruct Demo',
+        url: 'https://huggingface.co/spaces/huggingface-projects/llama-3.2-3B-Instruct',
+        description: 'Interact with Meta\'s instruction-tuned Llama 3.2 3B model directly in your browser—no signup or installation required.\nIn the "Prompt" field, type your instruction and any input text (e.g., "Summarize: <your text>"), then click "Generate" to see the model follow your command.\nUse the "Examples" tab to load pre-built instruction templates or enter your own custom instructions to explore how the model responds to diverse tasks.',
+      },
+    ],
+  },
+  {
+    id: generateId('Chain of Thought (CoT)'),
+    name: 'Chain of Thought (CoT)',
+    category: 'Interaction & Refinement',
+    content: {
+      simpleDefinition: 'A prompting technique that asks a model to generate its intermediate reasoning steps before giving a final answer.',
+      analogy: 'Showing your scratch work in math class so the teacher can follow your logic, not just the answer.',
+      example: 'Prompting "Let\'s think step by step" often yields more accurate arithmetic or logical reasoning from GPT-style models.',
+      whyItMatters: 'Dramatically boosts performance on complex tasks by making the model\'s latent reasoning explicit and less error-prone.',
     },
   },
 
@@ -287,8 +316,8 @@ export const terms: Term[] = [
     interactiveTools: [
        {
         name: 'Diffusion Explainer',
-        url: 'https://huggingface.co/spaces/huggingface-projects/diffusers-interpret', // Placeholder, user mentioned one by Polo Club but no direct URL for it. This is an example tool.
-        description: 'Interactive tool to explore diffusion models (actual tool may vary). The user mentioned one by Polo Club of Data Science, Georgia Tech, but no specific URL was provided for it directly.',
+        url: 'https://poloclub.github.io/diffusion-explainer/',
+        description: 'Launch the Diffusion Explainer demo in your browser—no signup, code, or GPU needed. Select a sample prompt or enter your own, then scrub through timesteps to see how the image is progressively refined. Click components like "Text Representation Generator" or "Image Representation Refiner" to toggle between architecture overview and detailed visualizations of each stage.',
       },
     ],
   },
@@ -313,6 +342,13 @@ export const terms: Term[] = [
       example: 'Used in image recognition (identifying faces in photos), speech recognition (voice assistants), and the core of LLMs like the Transformer Architecture.',
       whyItMatters: 'Neural Networks are the fundamental architecture underpinning most advanced AI, including all Generative AI models, enabling them to learn complex patterns and perform sophisticated tasks.',
     },
+    interactiveTools: [
+      {
+        name: 'TensorFlow Playground',
+        url: 'https://playground.tensorflow.org/',
+        description: 'Explore how neural networks learn right in your browser—no coding required. Use sliders to adjust learning rate, layers, and activation functions. Click "Play" to train a model live on colorful 2D datasets and see how decision boundaries evolve in real time. Ideal for intuitively grasping core neural net concepts.',
+      },
+    ],
   },
   {
     id: generateId('Generative Adversarial Network (GAN)'),
@@ -336,6 +372,125 @@ export const terms: Term[] = [
       example: 'Recommendation engines (like Netflix suggestions), fraud detection systems, and predictive analytics in business are all powered by ML.',
       whyItMatters: 'ML is the primary method by which modern AI systems, including all Generative AI models, acquire their intelligence and adapt to new information.',
     },
+  },
+  {
+    id: generateId('Self-Attention / Attention Mechanism'),
+    name: 'Self-Attention / Attention Mechanism',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A network component that lets a model weigh the importance of each input element relative to others when producing an output.',
+      analogy: 'Like a group discussion where you tune in louder to the most relevant speaker rather than giving everyone equal airtime.',
+      example: 'In a Transformer, self-attention helps the model link "bank" in "river bank" to "river" rather than "financial institution."',
+      whyItMatters: 'Powers state-of-the-art models by enabling context-aware processing and parallel computation—transforming tasks in translation, summarization, and more.',
+    },
+    interactiveTools: [
+      {
+        name: 'Comet Explainable AI for Transformers',
+        url: 'https://www.comet.com/site/blog/explainable-ai-for-transformers',
+        description: 'Explore attention patterns directly in-browser—no setup required. The embedded Comet panel loads a demo model pre-configured with attention data.\nSimply open the "Transformers Attention Head Viewer" panel, then click any layer and head combination to visualize token-to-token attention heatmaps in real time.',
+      },
+    ],
+  },
+  {
+    id: generateId('LoRA (Low-Rank Adaptation)'),
+    name: 'LoRA (Low-Rank Adaptation)',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A parameter-efficient fine-tuning method that injects small, trainable low-rank matrices into a frozen pre-trained model.',
+      analogy: 'Like adding lightweight expansion cards to your computer instead of replacing the entire motherboard.',
+      example: 'Applying LoRA to LLaMA lets you specialize for a new domain with only a fraction of the training cost and storage.',
+      whyItMatters: 'Makes fine-tuning large models accessible on limited hardware and speeds up iteration—key for rapid prototyping and edge deployments.',
+    },
+    interactiveTools: [
+      {
+        name: 'Lora The Explorer',
+        url: 'https://huggingface.co/spaces/multimodalart/LoraTheExplorer',
+        description: 'Experiment with LoRA fine-tuning by generating images with different style adapters. Choose a LoRA model, enter a prompt (e.g., "A photo of a futuristic vehicle"), and click "Generate." This lets you visually explore how LoRA changes output using lightweight parameter injection—directly in-browser with no signup or install required.',
+      },
+    ],
+  },
+  {
+    id: generateId('Zero-Shot / Few-Shot / One-Shot Learning'),
+    name: 'Zero-Shot / Few-Shot / One-Shot Learning',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'Techniques where a model performs a task with zero, one, or only a handful of examples provided at inference time.',
+      analogy: 'Meeting someone once (one-shot) or reading a brief description (few-shot) and immediately understanding what to do.',
+      example: 'GPT-3 can translate between languages "zero-shot" by simply being asked in English: "Translate into French: \'Good morning.\'"',
+      whyItMatters: 'Offers tremendous flexibility—no re-training required for every new task, accelerating deployment across varied use cases.',
+    },
+    interactiveTools: [
+      {
+        name: 'Xenova Zero-Shot Classifier',
+        url: 'https://mj106-xformjs.static.hf.space/zero-shot-classification.html',
+        description: 'Try out zero-shot learning by entering a sentence and a list of labels—no signup needed. For example, paste:\n"The stock market rallied after a favorable jobs report"\nwith labels like: "economy, sports, entertainment"\nThen click "Classify" to see how the model predicts the most relevant label without ever being trained on that specific task. You can modify the sentence or labels to explore how well it generalizes.',
+      },
+    ],
+  },
+  {
+    id: generateId('Vector Database'),
+    name: 'Vector Database',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A specialized database optimized for storing and retrieving high-dimensional vectors based on similarity search.',
+      analogy: 'Like a library organized not by title or author but by the content\'s thematic similarity—pulling related books even if they don\'t share obvious keywords.',
+      example: 'Pinecone or Weaviate serve as backends for retrieval-augmented generation, fetching relevant passages given an embedding query.',
+      whyItMatters: 'Underpins semantic search, recommendation engines, and chatbots that need lightning-fast access to contextually related information.',
+    },
+  },
+  {
+    id: generateId('Temperature / Top-p'),
+    name: 'Temperature / Top-p',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'Hyperparameters controlling the randomness of a model\'s next-token selection—temperature adjusts distribution "sharpness," top-p limits sampling to the most probable tokens.',
+      analogy: 'Temperature is the spice dial (higher = more adventurous); top-p is the tasting spoon that only picks from your top-favorite ingredients.',
+      example: 'Setting temperature=0.2 yields very conservative text; top-p=0.9 lets the model choose from the top 90% probable words, balancing creativity and coherence.',
+      whyItMatters: 'Fine-tuning these settings lets you steer outputs toward formulaic precision or creative variety, depending on your application\'s needs.',
+    },
+    interactiveTools: [
+      {
+        name: 'OpenRouter Playground',
+        url: 'https://openrouter.ai/chat',
+        description: 'Use OpenRouter\'s chat playground to see how temperature and top-p influence a model\'s creativity. Log in, choose a model, then open "Settings" to adjust temperature (controls randomness) and top-p (limits sampling to top-probable tokens). Try the same prompt with different values to observe how outputs shift between predictable and imaginative responses.',
+      },
+    ],
+  },
+  {
+    id: generateId('GAN Dissection (GANPaint)'),
+    name: 'GAN Dissection (GANPaint)',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'A tool for exploring the internal neurons of a GAN, showing how specific units correspond to interpretable concepts like "tree," "door," or "tower."',
+      analogy: 'It\'s like a brain surgery toolkit for GANs—you can toggle on/off specific "neurons" and see how the sample image changes in real time.',
+      example: 'In GANPaint, click "tree" to activate tree-related units—then add or remove trees from a generated scene. Flip "door" units to insert or remove a door.',
+      whyItMatters: 'Demonstrates that GANs learn compositional, object-level representations internally. Enables causal manipulation of generated content and improves interpretability in generative models.',
+    },
+    interactiveTools: [
+      {
+        name: 'GANPaint / GAN Dissection Demo',
+        url: 'https://gandissect.csail.mit.edu/',
+        description: 'Explore which neurons control what in a GAN. Launch the demo, select objects like "trees" or "doors," and flip their neurons on/off to add/remove them from generated scenes. Observe how GANs build compositions atop these internal units—all directly in-browser and no code required.',
+      },
+    ],
+  },
+  {
+    id: generateId('GAN Lab'),
+    name: 'GAN Lab',
+    category: 'AI Architectures & Capabilities',
+    content: {
+      simpleDefinition: 'An interactive in-browser tool that helps users visualize and train simple GANs (Generator & Discriminator) step-by-step on toy 2D distributions.',
+      analogy: 'Think of two sculptors working together—one creates shapes, the other critiques them—and they iterate until the shapes look real.',
+      example: 'Use GAN Lab to train on sample data like blended circles or spirals. You can pulse through each iteration or slow-motion to watch how generated points increasingly match the real data.',
+      whyItMatters: 'Makes the adversarial training process tangible, revealing how both networks evolve together and offering intuitive insight into GAN dynamics.',
+    },
+    interactiveTools: [
+      {
+        name: 'GAN Lab',
+        url: 'https://poloclub.github.io/ganlab/',
+        description: 'Run GAN Lab directly in your browser—no installation needed. Start with sample distributions or draw your own. Use play, slow-motion, or step controls to watch generator and discriminator updates unfold. Adjust hyperparameters live (learning rate, batch size, noise) to see their effect on training dynamics and model performance.',
+      },
+    ],
   },
 
   // Future & Research Landscape
@@ -362,6 +517,24 @@ export const terms: Term[] = [
       elaboration: 'ASI is a concept that goes beyond merely matching human intelligence; it posits an intelligence that is orders of magnitude greater. This could lead to an "[intelligence explosion](https://www.forethought.org/research/three-types-of-intelligence-explosion)" where the ASI rapidly improves itself, creating an even more powerful intelligence. This concept raises significant ethical and control challenges, often debated in the context of existential risk and the future of humanity.',
       whyItMatters: 'This concept is moving from theoretical to a question of when do we get ASI, it drives discussions on future ethics and control of advanced AI, highlighting responsible AI development and the need for robust safeguards as AI capabilities continue to advance.',
     },
+  },
+  {
+    id: generateId('Tree of Thought'),
+    name: 'Tree of Thought',
+    category: 'Future & Research Landscape',
+    content: {
+      simpleDefinition: 'An emerging approach that explores multiple parallel chains of thought (branches), evaluates them, and backtracks to the most promising paths.',
+      analogy: 'Like navigating a maze by sending out multiple explorers down different corridors, then picking the one that leads closest to the exit.',
+      example: 'Research prototypes generate and score several reasoning paths for a puzzle before committing to the final solution.',
+      whyItMatters: 'Promises further gains in reasoning quality by allowing models to recover from dead-end thoughts and explore richer solution spaces.',
+    },
+    interactiveTools: [
+      {
+        name: 'Tree of Thought GitHub Demo',
+        url: 'https://github.com/princeton-nlp/tree-of-thought-llm',
+        description: 'Explore Tree of Thought reasoning by cloning the original research repo from Princeton NLP. The included Python notebooks let you define problems, generate multiple reasoning paths, and apply search strategies like BFS or self-consistency. Best used by launching in Colab or your preferred notebook environment.',
+      },
+    ],
   },
 ];
 

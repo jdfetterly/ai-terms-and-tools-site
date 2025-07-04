@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare, Globe, Linkedin, PenSquare } from 'lucide-react';
+import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare, Globe, Linkedin, PenSquare, BookOpen, Bot } from 'lucide-react';
 import {
   SidebarProvider,
   Sidebar,
@@ -157,29 +157,10 @@ export default function AIPediaPage() {
             <Button variant="outline" size="sm" className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground" onClick={() => setIsRequestDialogOpen(true)}>
               Request New Term
             </Button>
-            <nav className="site-footer-nav">
-              <div className="flex flex-col space-y-2">
-                <Button asChild variant="outline" size="sm" className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground">
-                  <a href="https://the-context-window.ghost.io/" target="_blank" rel="noopener noreferrer">
-                    The Context Window
-                  </a>
-                </Button>
-                <Button asChild variant="outline" size="sm" className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground">
-                  <a href="https://www.chatbotlabs.io" target="_blank" rel="noopener noreferrer">
-                    ChatBot Labs
-                  </a>
-                </Button>
-              </div>
-            </nav>
           </div>
           <div className="space-y-2">
-            <p className="text-xs text-muted-foreground text-center flex items-center justify-center space-x-1">
-              <span>Designed & Vibe Coded with</span>
-              <Heart className="h-3 w-3" />
-              <span>by JD</span>
-            </p>
             <div className="flex items-center justify-center space-x-4 text-muted-foreground">
-              <a href="https://x.com/realJDFetterly" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+              <a href="https://x.com/realJDFetterly" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="X Profile">
                 <svg
                   className="h-4 w-4"
                   viewBox="0 0 1200 1227"
@@ -190,19 +171,23 @@ export default function AIPediaPage() {
                 </svg>
                 <span className="sr-only">X Profile</span>
               </a>
-              <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+              <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="LinkedIn Profile">
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn Profile</span>
               </a>
-              <a href="https://the-context-window.ghost.io/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
-                <PenSquare className="h-4 w-4" />
-                <span className="sr-only">Blog</span>
+              <a href="https://the-context-window.ghost.io/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="The Context Window">
+                <BookOpen className="h-4 w-4" />
+                <span className="sr-only">The Context Window</span>
               </a>
-              <a href="https://www.chatbotlabs.io/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
-                <Globe className="h-4 w-4" />
-                <span className="sr-only">Consulting Website</span>
+              <a href="https://www.chatbotlabs.io/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="ChatBot Labs">
+                <Bot className="h-4 w-4" />
+                <span className="sr-only">ChatBot Labs</span>
               </a>
             </div>
+            <p className="text-[10px] text-muted-foreground text-center flex items-center justify-center space-x-1">
+              <span>Designed & Vibe Coded with</span>
+              <Heart className="h-2.5 w-2.5" />
+            </p>
           </div>
         </SidebarFooter>
       </Sidebar>
@@ -210,7 +195,7 @@ export default function AIPediaPage() {
       <SidebarInset className="flex flex-col">
         <div ref={staticHeaderRef} className="sticky top-0 z-30 bg-background p-6 border-b">
           <h1 className="text-3xl lg:text-4xl font-bold font-headline mb-2 text-primary">
-            Explain Generative AI
+            Generative AI Explained
           </h1>
           <p className="text-lg text-foreground/90">
             Plain-English Explanations + Interactive Tools for Generative AI Terms
