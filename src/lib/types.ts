@@ -1,8 +1,8 @@
-
 export interface InteractiveTool {
   name: string;
   url: string;
   description?: string;
+  type: 'interactive' | 'guide' | 'external';
 }
 
 export interface TermContent {

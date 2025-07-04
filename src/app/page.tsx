@@ -23,12 +23,21 @@ import {
   SidebarGroup,
   SidebarGroupLabel
 } from '@/components/ui/sidebar';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { Term } from '@/lib/types';
+
+type ViewMode = 'all' | 'interactive' | 'guides';
 
 export default function AIPediaPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [showInteractiveOnly, setShowInteractiveOnly] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('all');
   const [staticHeaderHeight, setStaticHeaderHeight] = useState(0);
   const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
 
@@ -48,12 +57,27 @@ export default function AIPediaPage() {
   const filteredTerms = useMemo(() => {
     let displayTerms = [...allTermsData];
 
-    if (showInteractiveOnly) {
-      displayTerms = displayTerms.filter(term => term.interactiveTools && term.interactiveTools.length > 0);
-    } else if (selectedCategory) {
+    // Apply view mode filter
+    if (viewMode === 'interactive') {
+      displayTerms = displayTerms.filter(term => 
+        term.interactiveTools && 
+        term.interactiveTools.length > 0 &&
+        term.interactiveTools.some(tool => tool.type === 'interactive' || tool.type === 'external')
+      );
+    } else if (viewMode === 'guides') {
+      displayTerms = displayTerms.filter(term => 
+        term.interactiveTools && 
+        term.interactiveTools.length > 0 &&
+        term.interactiveTools.some(tool => tool.type === 'guide')
+      );
+    }
+
+    // Apply category filter
+    if (selectedCategory) {
       displayTerms = displayTerms.filter(term => term.category === selectedCategory);
     }
 
+    // Apply search filter
     if (searchTerm) {
       displayTerms = displayTerms.filter(term =>
         term.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -65,85 +89,48 @@ export default function AIPediaPage() {
     displayTerms.sort((a, b) => a.name.localeCompare(b.name));
     
     return displayTerms;
-  }, [searchTerm, selectedCategory, showInteractiveOnly]);
+  }, [searchTerm, selectedCategory, viewMode]);
 
-  const currentViewTitle = showInteractiveOnly 
+  const currentViewTitle = viewMode === 'interactive' 
     ? 'Interactive Tools' 
+    : viewMode === 'guides'
+    ? 'Guides'
     : selectedCategory 
     ? selectedCategory 
     : 'All Terms (A-Z)';
 
+  const handleViewModeChange = (mode: ViewMode) => {
+    setViewMode(mode);
+    setSelectedCategory(null); // Clear category when changing view mode
+  };
 
   return (
     <SidebarProvider defaultOpen>
       <Sidebar>
         <SidebarContent className="p-0">
-          <div className="p-4">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search terms..."
-                className="pl-8 w-full"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
-          
-          <SidebarGroup className="p-2">
-            <SidebarGroupLabel>Browse</SidebarGroupLabel>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  onClick={() => {
-                    setSelectedCategory(null);
-                    setShowInteractiveOnly(false);
-                  }}
-                  isActive={selectedCategory === null && !showInteractiveOnly}
-                  tooltip="View all terms alphabetically"
-                  className="w-full"
-                >
-                  <ListChecks />
-                  All Terms (A-Z)
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  onClick={() => {
-                    setSelectedCategory(null);
-                    setShowInteractiveOnly(true);
-                  }}
-                  isActive={showInteractiveOnly}
-                  tooltip="View terms with interactive tools"
-                  className="w-full"
-                >
-                  <PlaySquare />
-                  Interactive Tools
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroup>
+          {/* Info Boxes in Sidebar */}
+          <SidebarGroup className="p-4">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg shadow-sm border">
+                <Sparkles className="h-6 w-6 text-accent shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-medium text-card-foreground mb-1">Your Guide to GenAI</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    A plain-English guide for navigating Generative AI. Learn to speak the language of Artificial Intelligence.
+                  </p>
+                </div>
+              </div>
 
-          <SidebarGroup className="p-2">
-            <SidebarGroupLabel>Categories</SidebarGroupLabel>
-            <SidebarMenu>
-              {predefinedCategories.map((category) => (
-                <SidebarMenuItem key={category}>
-                  <SidebarMenuButton
-                    onClick={() => {
-                      setSelectedCategory(category);
-                      setShowInteractiveOnly(false);
-                    }}
-                    isActive={selectedCategory === category}
-                    tooltip={`View terms in ${category}`}
-                    className="w-full"
-                  >
-                    {category}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg shadow-sm border">
+                <Puzzle className="h-6 w-6 text-accent shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-medium text-card-foreground mb-1">Explore & Understand</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    For some of the terms below, I've either built or found interactive tools to help you grasp the concepts.
+                  </p>
+                </div>
+              </div>
+            </div>
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className="p-4 border-t space-y-4">
@@ -199,43 +186,84 @@ export default function AIPediaPage() {
         </div>
 
         <header
-          className="sticky z-20 flex h-14 lg:h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6 lg:px-8"
+          className="sticky z-20 flex h-auto min-h-14 lg:min-h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6 lg:px-8 py-3"
           style={{ top: staticHeaderHeight ? `${staticHeaderHeight}px` : '0px' }}
         >
-          <div className="max-w-7xl mx-auto w-full flex items-center gap-4">
-            <SidebarTrigger className="md:hidden" />
-            <h2 className="text-lg lg:text-xl font-semibold font-headline">
-              {currentViewTitle}
-            </h2>
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-3">
+              <SidebarTrigger className="lg:hidden self-start" />
+              
+              {/* Search Bar */}
+              <div className="relative lg:w-1/4">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search terms..."
+                  className="pl-8 w-full"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+
+              {/* Categories Dropdown */}
+              <div className="lg:w-1/4">
+                <Select value={selectedCategory || "all"} onValueChange={(value) => {
+                  setSelectedCategory(value === "all" ? null : value);
+                  setViewMode('all');
+                }}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="All Categories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    {predefinedCategories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Browse Toggle Buttons */}
+              <div className="flex flex-wrap lg:flex-nowrap gap-2">
+                <Button
+                  variant={viewMode === 'all' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => handleViewModeChange('all')}
+                  className="flex items-center gap-2"
+                >
+                  <ListChecks className="h-4 w-4" />
+                  <span className="hidden sm:inline">All Terms</span>
+                  <span className="sm:hidden">All</span>
+                </Button>
+                <Button
+                  variant={viewMode === 'interactive' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => handleViewModeChange('interactive')}
+                  className="flex items-center gap-2"
+                >
+                  <PlaySquare className="h-4 w-4" />
+                  <span className="hidden sm:inline">Interactive Tools</span>
+                  <span className="sm:hidden">Interactive</span>
+                </Button>
+                <Button
+                  variant={viewMode === 'guides' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => handleViewModeChange('guides')}
+                  className="flex items-center gap-2"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  <span className="hidden sm:inline">Guides</span>
+                  <span className="sm:hidden">Guides</span>
+                </Button>
+              </div>
+            </div>
           </div>
         </header>
         
         <ScrollArea className="flex-1">
           <div className="p-6 max-w-7xl mx-auto">
-            {selectedCategory === null && !showInteractiveOnly && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-                <div className="flex items-start gap-3 p-4 bg-card rounded-lg shadow-sm border">
-                  <Sparkles className="h-6 w-6 text-accent shrink-0 mt-0.5" />
-                  <div>
-                    <h3 className="font-medium text-card-foreground mb-1">Your Guide to GenAI</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      A plain-English guide for navigating Generative AI. Learn to speak the language of Artificial Intelligence.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-4 bg-card rounded-lg shadow-sm border">
-                  <Puzzle className="h-6 w-6 text-accent shrink-0 mt-0.5" />
-                  <div>
-                    <h3 className="font-medium text-card-foreground mb-1">Explore & Understand</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      For some of the terms below, I've either built or found interactive tools to help you grasp the concepts.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
             {filteredTerms.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6">
                 {filteredTerms.map(term => (

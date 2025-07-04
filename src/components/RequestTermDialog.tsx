@@ -111,10 +111,6 @@ Tool Description: ${interactiveToolDescription || '(not provided)'}
         window.location.href = mailtoLink;
         setIsSubmitting(false);
         handleOpenChange(false);
-        toast({
-          title: 'Success!',
-          description: 'Your email client has been opened to send the request.',
-        });
     }, 500);
   };
 
