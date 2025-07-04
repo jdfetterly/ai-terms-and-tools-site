@@ -160,7 +160,7 @@ export default function AIPediaPage() {
             <nav className="site-footer-nav">
               <div className="flex flex-col space-y-2">
                 <Button asChild variant="outline" size="sm" className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground">
-                  <a href="https://blog.contextwindow.ai" target="_blank" rel="noopener noreferrer">
+                  <a href="https://the-context-window.ghost.io/" target="_blank" rel="noopener noreferrer">
                     The Context Window
                   </a>
                 </Button>
