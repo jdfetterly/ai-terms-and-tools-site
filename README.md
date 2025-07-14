@@ -1,4 +1,4 @@
-# AI Lexicon
+# Generative AI Explained
 
 An interactive Next.js application that serves as a comprehensive guide to Artificial Intelligence terminology. The AI Lexicon provides clear, accessible definitions of AI concepts with interactive tools and AI-powered examples to help users understand the rapidly evolving world of artificial intelligence.
 
