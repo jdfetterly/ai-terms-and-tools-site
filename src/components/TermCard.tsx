@@ -33,9 +33,11 @@ export default function TermCard({ term }: TermCardProps) {
   const handleCardClick = () => {
     // Convert term name to lowercase hyphen-separated format for GA4
     const termLabel = term.name.toLowerCase().replace(/\s+/g, '-');
-    
     // Call GA4 tracking function (declared globally in layout.tsx)
-    if (typeof window !== 'undefined' && (window as any).trackViewTerm) {
+    // @ts-ignore
+    if (typeof window !== 'undefined' && (window as any).trackEvent) {
+      (window as any).trackEvent('view_term', { term_name: term.name, button_type: 'term_card' });
+    } else if (typeof window !== 'undefined' && (window as any).trackViewTerm) {
       (window as any).trackViewTerm(termLabel);
     }
   };

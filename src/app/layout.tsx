@@ -66,20 +66,27 @@ export default function RootLayout({
                 gtag('event', 'view_term', {
                   event_category: 'glossary',
                   event_label: termName,
+                  term_name: termName,
+                  debug_mode: true
                 });
               }
 
-              function trackToolLaunch(toolName) {
+              function trackToolLaunch(toolName, toolType) {
                 gtag('event', 'launch_tool', {
                   event_category: 'interactive_tools',
                   event_label: toolName,
+                  tool_name: toolName,
+                  button_type: toolType || 'tool',
+                  debug_mode: true
                 });
               }
 
-              function trackOutboundClick(url) {
+              function trackOutboundClick(url, platform) {
                 gtag('event', 'outbound_click', {
                   event_category: 'navigation',
                   event_label: url,
+                  platform: platform || '',
+                  debug_mode: true
                 });
               }
 
@@ -89,8 +96,15 @@ export default function RootLayout({
                 links.forEach(link => {
                   const href = link.getAttribute('href');
                   const isExternal = !href.includes(location.hostname);
+                  let platform = '';
+                  if (link.classList.contains('footer-link')) {
+                    if (link.classList.contains('linkedin')) platform = 'LinkedIn';
+                    else if (link.classList.contains('x')) platform = 'X';
+                    else if (link.classList.contains('email')) platform = 'Email';
+                    else if (link.classList.contains('rss')) platform = 'RSS';
+                  }
                   if (isExternal) {
-                    link.addEventListener('click', () => trackOutboundClick(href));
+                    link.addEventListener('click', () => trackOutboundClick(href, platform));
                   }
                 });
               });

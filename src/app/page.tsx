@@ -144,7 +144,7 @@ export default function AIPediaPage() {
               size="sm"
               className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground"
               onClick={() => {
-                trackEvent('subscribe_button_click', { destination: 'hubspot_form' });
+                trackEvent('subscribe_button_click', { button_type: 'subscribe', platform: 'Email' });
                 setIsSubscribeDialogOpen(true);
               }}
               style={{ marginBottom: '0.5rem', padding: '0.75rem 1rem' }}
@@ -157,7 +157,7 @@ export default function AIPediaPage() {
               size="sm"
               className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground"
               onClick={() => {
-                trackEvent('request_new_term_click', { button_location: 'main_page' });
+                trackEvent('request_new_term_click', { button_type: 'request_new_term' });
                 setIsRequestDialogOpen(true);
               }}
             >
@@ -166,7 +166,7 @@ export default function AIPediaPage() {
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-center space-x-4 text-muted-foreground">
-              <a href="https://x.com/realJDFetterly" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="X Profile" onClick={() => trackEvent('social_link_click', { platform: 'x' })}>
+              <a href="https://x.com/realJDFetterly" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="X Profile" onClick={() => trackEvent('social_link_click', { platform: 'X', button_type: 'social' })}>
                 <svg
                   className="h-4 w-4"
                   viewBox="0 0 1200 1227"
@@ -177,7 +177,7 @@ export default function AIPediaPage() {
                 </svg>
                 <span className="sr-only">X Profile</span>
               </a>
-              <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="LinkedIn Profile" onClick={() => trackEvent('social_link_click', { platform: 'linkedin' })}>
+              <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="LinkedIn Profile" onClick={() => trackEvent('social_link_click', { platform: 'LinkedIn', button_type: 'social' })}>
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn Profile</span>
               </a>
@@ -256,7 +256,7 @@ export default function AIPediaPage() {
                   variant={viewMode === 'all' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => {
-                    trackEvent('filter_button_click', { filter_type: 'all' });
+                    trackEvent('filter_button_click', { button_type: 'filter', filter_type: 'all' });
                     handleViewModeChange('all');
                   }}
                   className="flex items-center gap-2"
@@ -269,7 +269,7 @@ export default function AIPediaPage() {
                   variant={viewMode === 'interactive' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => {
-                    trackEvent('filter_button_click', { filter_type: 'interactive_tools' });
+                    trackEvent('filter_button_click', { button_type: 'filter', filter_type: 'interactive_tools' });
                     handleViewModeChange('interactive');
                   }}
                   className="flex items-center gap-2"
@@ -282,7 +282,7 @@ export default function AIPediaPage() {
                   variant={viewMode === 'guides' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => {
-                    trackEvent('filter_button_click', { filter_type: 'guides' });
+                    trackEvent('filter_button_click', { button_type: 'filter', filter_type: 'guides' });
                     handleViewModeChange('guides');
                   }}
                   className="flex items-center gap-2"

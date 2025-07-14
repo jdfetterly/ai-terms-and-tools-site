@@ -9,11 +9,12 @@
 export function trackEvent(eventName: string, params: Record<string, any> = {}) {
   // Debug mode: set window.GA_DEBUG = true in the browser console to enable
   const debug = typeof window !== 'undefined' && (window as any).GA_DEBUG;
+  const mergedParams = { ...params, debug_mode: true };
   if (debug) {
     // eslint-disable-next-line no-console
-    console.log('[GA4 DEBUG]', eventName, params);
+    console.log('[GA4 DEBUG]', eventName, mergedParams);
   }
   if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-    (window as any).gtag('event', eventName, params);
+    (window as any).gtag('event', eventName, mergedParams);
   }
 } 
