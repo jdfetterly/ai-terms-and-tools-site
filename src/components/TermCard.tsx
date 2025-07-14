@@ -7,7 +7,7 @@ import MarkdownRenderer from './MarkdownRenderer';
 import InteractiveToolModal from './InteractiveToolModal';
 import SmartToolHandler from './SmartToolHandler';
 import React, { useState } from 'react';
-import { PlaySquare, BookOpen, ExternalLink } from 'lucide-react';
+import { PlaySquare, BookOpen, ExternalLink, Flame } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import {
   Accordion,
@@ -81,6 +81,14 @@ export default function TermCard({ term }: TermCardProps) {
     return `${types.join(', ')} available`;
   };
 
+  // List of hotly contested terms
+  const hotlyContestedTerms = [
+    'AGI (Artificial General Intelligence)',
+    'AI Agents',
+    'ASI (Artificial Super Intelligence)'
+  ];
+  const isHotlyContested = hotlyContestedTerms.includes(term.name);
+
   return (
     <>
       <Card 
@@ -89,7 +97,19 @@ export default function TermCard({ term }: TermCardProps) {
         onClick={handleCardClick}
       >
         <CardHeader className="bg-card-foreground/5 pb-3 flex-shrink-0">
-          <CardTitle className="text-xl font-headline text-primary min-h-[3.5rem] flex items-start leading-tight">{term.name}</CardTitle>
+          <CardTitle className="text-xl font-headline text-primary min-h-[3.5rem] flex items-start leading-tight">
+            {term.name}
+            {isHotlyContested && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="ml-2 align-middle cursor-help"><Flame className="h-5 w-5 text-orange-500" /></span>
+                </TooltipTrigger>
+                <TooltipContent side="top" align="center" sideOffset={4}>
+                  <p>This term's definition is hotly contested</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </CardTitle>
           <div className="flex items-center justify-between mt-1">
             <Badge variant="default" className="text-xs">{term.category}</Badge>
             {getCardIcon() && (
