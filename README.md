@@ -141,7 +141,7 @@ interface TermContent {
 - Focus on what the term actually means
 
 #### Analogy
-- Help users relate to familiar concepts
+- Help users relate to familiar concepts 
 - Use everyday situations or objects
 - Make abstract concepts concrete
 
