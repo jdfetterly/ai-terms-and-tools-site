@@ -48,9 +48,15 @@ export default function InteractiveToolModal({
     window.open(tool.url, '_blank', 'noopener,noreferrer');
     
     // Track tool launch in new tab
-    const toolLabel = tool.name.toLowerCase().replace(/\s+/g, '-');
-    if (typeof window !== 'undefined' && (window as any).trackToolLaunch) {
-      (window as any).trackToolLaunch(`${toolLabel}-new-tab-fallback`);
+    const payload = {
+      tool_name: tool.name,
+      button_type: tool.type,
+      debug_mode: true
+    };
+    // @ts-ignore
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      console.log('[GA4] tool_launch_click', payload);
+      window.gtag('event', 'tool_launch_click', payload);
     }
   };
 
@@ -118,9 +124,15 @@ export default function InteractiveToolModal({
               rel="noopener noreferrer"
               onClick={() => {
                 // Track tool launch in new tab
-                const toolLabel = tool.name.toLowerCase().replace(/\s+/g, '-');
-                if (typeof window !== 'undefined' && (window as any).trackToolLaunch) {
-                  (window as any).trackToolLaunch(`${toolLabel}-new-tab`);
+                const payload = {
+                  tool_name: tool.name,
+                  button_type: 'new-tab',
+                  debug_mode: true
+                };
+                // @ts-ignore
+                if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                  console.log('[GA4] tool_launch_click', payload);
+                  window.gtag('event', 'tool_launch_click', payload);
                 }
               }}
             >

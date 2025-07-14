@@ -22,10 +22,15 @@ export default function SmartToolHandler({ tool, onOpenModal, className }: Smart
     }
 
     // Track tool launch
-    const toolLabel = tool.name.toLowerCase().replace(/\s+/g, '-');
-    const trackingSuffix = tool.type === 'interactive' ? '-modal' : '-direct';
-    if (typeof window !== 'undefined' && (window as any).trackToolLaunch) {
-      (window as any).trackToolLaunch(`${toolLabel}${trackingSuffix}`);
+    const payload = {
+      tool_name: tool.name,
+      button_type: tool.type,
+      debug_mode: true
+    };
+    // @ts-ignore
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      console.log('[GA4] tool_launch_click', payload);
+      window.gtag('event', 'tool_launch_click', payload);
     }
   };
 
