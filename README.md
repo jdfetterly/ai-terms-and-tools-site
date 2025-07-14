@@ -330,3 +330,32 @@ When setting up Cloudflare Pages, use these build settings:
 
 *Built with ❤️ by JD | [ChatBotLabs.io](https://chatbotlabs.io)*
 # Trigger Cloudflare rebuild
+
+## Analytics Event Tracking
+
+This project uses a centralized utility for Google Analytics 4 (GA4) event tracking.
+
+### Usage
+
+Import and use the `trackEvent` function from `src/lib/trackEvent` in your components:
+
+```ts
+import { trackEvent } from '@/lib/trackEvent';
+
+// Example usage:
+trackEvent('subscribe_button_click', { destination: 'hubspot_form' });
+```
+
+- **Event names and parameters:** Always reference `docs/analytics-instrumentation.md` for the latest list of event names and required parameters.
+
+### Debug Mode
+
+To enable debug mode (for QA/testing), open your browser console and run:
+
+```js
+window.GA_DEBUG = true;
+```
+
+When enabled, all tracked events will be logged to the console in addition to being sent to GA4.
+
+---

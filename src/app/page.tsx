@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { terms as allTermsData, categories as predefinedCategories } from '@/data/terms';
 import TermCard from '@/components/TermCard';
 import RequestTermDialog from '@/components/RequestTermDialog';
@@ -8,7 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { ListChecks, Search, Sparkles, Puzzle, Lightbulb, Heart, PlaySquare, Globe, Linkedin, PenSquare, BookOpen, Bot } from 'lucide-react';
+import { ListChecks, Search, Sparkles, Puzzle, Heart, PlaySquare, Globe, Linkedin, BookOpen, Bot } from 'lucide-react';
+import SubscribeDialog from '@/components/SubscribeDialog';
 import {
   SidebarProvider,
   Sidebar,
@@ -31,6 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { Term } from '@/lib/types';
+import { trackEvent } from '@/lib/trackEvent';
 
 type ViewMode = 'all' | 'interactive' | 'guides';
 
@@ -40,6 +42,8 @@ export default function AIPediaPage() {
   const [viewMode, setViewMode] = useState<ViewMode>('all');
   const [staticHeaderHeight, setStaticHeaderHeight] = useState(0);
   const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
+  const [isSubscribeDialogOpen, setIsSubscribeDialogOpen] = useState(false);
+  // removed sidebar inline subscribe logic
 
   const staticHeaderRef = React.useRef<HTMLDivElement>(null);
 
@@ -135,13 +139,34 @@ export default function AIPediaPage() {
         </SidebarContent>
         <SidebarFooter className="p-4 border-t space-y-4">
           <div className="flex flex-col space-y-2">
-            <Button variant="outline" size="sm" className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground" onClick={() => setIsRequestDialogOpen(true)}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground"
+              onClick={() => {
+                trackEvent('subscribe_button_click', { destination: 'hubspot_form' });
+                setIsSubscribeDialogOpen(true);
+              }}
+              style={{ marginBottom: '0.5rem', padding: '0.75rem 1rem' }}
+            >
+              Subscribe
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground"
+              onClick={() => {
+                trackEvent('request_new_term_click', { button_location: 'main_page' });
+                setIsRequestDialogOpen(true);
+              }}
+            >
               Request New Term
             </Button>
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-center space-x-4 text-muted-foreground">
-              <a href="https://x.com/realJDFetterly" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="X Profile">
+              <a href="https://x.com/realJDFetterly" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="X Profile" onClick={() => trackEvent('social_link_click', { platform: 'x' })}>
                 <svg
                   className="h-4 w-4"
                   viewBox="0 0 1200 1227"
@@ -152,7 +177,7 @@ export default function AIPediaPage() {
                 </svg>
                 <span className="sr-only">X Profile</span>
               </a>
-              <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="LinkedIn Profile">
+              <a href="https://www.linkedin.com/in/jdfetterly/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="LinkedIn Profile" onClick={() => trackEvent('social_link_click', { platform: 'linkedin' })}>
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn Profile</span>
               </a>
@@ -230,7 +255,10 @@ export default function AIPediaPage() {
                 <Button
                   variant={viewMode === 'all' ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => handleViewModeChange('all')}
+                  onClick={() => {
+                    trackEvent('filter_button_click', { filter_type: 'all' });
+                    handleViewModeChange('all');
+                  }}
                   className="flex items-center gap-2"
                 >
                   <ListChecks className="h-4 w-4" />
@@ -240,7 +268,10 @@ export default function AIPediaPage() {
                 <Button
                   variant={viewMode === 'interactive' ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => handleViewModeChange('interactive')}
+                  onClick={() => {
+                    trackEvent('filter_button_click', { filter_type: 'interactive_tools' });
+                    handleViewModeChange('interactive');
+                  }}
                   className="flex items-center gap-2"
                 >
                   <PlaySquare className="h-4 w-4" />
@@ -250,7 +281,10 @@ export default function AIPediaPage() {
                 <Button
                   variant={viewMode === 'guides' ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => handleViewModeChange('guides')}
+                  onClick={() => {
+                    trackEvent('filter_button_click', { filter_type: 'guides' });
+                    handleViewModeChange('guides');
+                  }}
                   className="flex items-center gap-2"
                 >
                   <BookOpen className="h-4 w-4" />
@@ -281,6 +315,7 @@ export default function AIPediaPage() {
         </ScrollArea>
       </SidebarInset>
       <RequestTermDialog isOpen={isRequestDialogOpen} onOpenChange={setIsRequestDialogOpen} />
+      <SubscribeDialog isOpen={isSubscribeDialogOpen} onOpenChange={setIsSubscribeDialogOpen} />
     </SidebarProvider>
   );
 }
