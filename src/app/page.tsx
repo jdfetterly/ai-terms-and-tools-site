@@ -233,7 +233,7 @@ export default function AIPediaPage() {
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn Profile</span>
               </a>
-              <a href="https://the-context-window.ghost.io/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="The Context Window">
+              <a href="https://www.the-context-window.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" title="The Context Window">
                 <BookOpen className="h-4 w-4" />
                 <span className="sr-only">The Context Window</span>
               </a>
