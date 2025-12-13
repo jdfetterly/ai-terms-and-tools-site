@@ -290,7 +290,7 @@ This project is private. Please respect the intellectual property and seek permi
 For questions, suggestions, or support:
 - Email: jd@chatbotlabs.io
 - LinkedIn: [@jdfetterly](https://linkedin.com/in/jdfetterly)
-- Blog: [The Context Window](https://the-context-window.ghost.io/)
+- Blog: [The Context Window](https://www.the-context-window.com)
 
 ## Static Export Limitations
 
